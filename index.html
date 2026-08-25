@@ -135,6 +135,16 @@
   .score-card .sc-bar-bg{height:6px; background:var(--surface-container-mid); border-radius:var(--radius-full); overflow:hidden;}
   .score-card .sc-bar-fill{height:100%;}
 
+  /* start here page */
+  .weight-stack{display:flex; width:100%; height:44px; border-radius:var(--radius); overflow:hidden; margin:16px 0 24px;}
+  .weight-seg{display:flex; align-items:center; justify-content:center; color:#fff; font-size:12px; font-weight:700; letter-spacing:0.02em; text-align:center; padding:0 4px;}
+  .start-cat-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:16px;}
+  @media(max-width:760px){.start-cat-grid{grid-template-columns:1fr;}}
+  .start-cat-card{background:var(--surface-container-low); border-radius:var(--radius); padding:18px; display:flex; flex-direction:column; gap:10px;}
+  .start-cat-head{display:flex; flex-direction:column; gap:6px; padding-top:10px;}
+  .start-cat-head h3{font-size:17px; margin:0;}
+  .start-cat-card p{font-size:13px; line-height:1.6; color:var(--on-surface-subtle); margin:0;}
+
   /* candidate review */
   textarea#resumeInput{
     width:100%; min-height:180px; padding:14px; border-radius:var(--radius); border:1px solid var(--border-medium);
@@ -185,7 +195,8 @@
       <div class="topbar-right">
         <span class="build-tag" id="buildTag"></span>
         <div class="tabs">
-          <button class="tab-btn active" data-tab="team">Team DNA</button>
+          <button class="tab-btn active" data-tab="start">Start Here</button>
+          <button class="tab-btn" data-tab="team">Team DNA</button>
           <button class="tab-btn" data-tab="candidate">Candidate Review</button>
           <button class="tab-btn" data-tab="wins">Wins &amp; Gaps</button>
         </div>
@@ -195,8 +206,95 @@
     <p class="sub">The current team's aggregate strengths and gaps, a candidate scoring tool for resume or profile review, and a rollup of where to invest next.</p>
   </header>
 
+  <!-- ===================== START HERE VIEW ===================== -->
+  <div class="view active" id="view-start">
+
+    <div class="card">
+      <span class="eyebrow" style="display:block; margin-bottom:8px;">Why This Framework Exists</span>
+      <h2 style="font-size:26px; margin-bottom:10px;">What makes a great Enterprise Architect here</h2>
+      <p style="font-size:15px; line-height:1.7; color:var(--on-surface-subtle); max-width:760px;">
+        An EA at Adobe Integrated Services has to move fluidly between deep Adobe platform knowledge and the
+        judgment to lead a client through ambiguity, a boardroom, and a delivery pod all in the same week. No single
+        person walks in with all of it. This page breaks down the competencies we score against, why each one earns
+        its weight, and what "good enough to hire" actually looks like versus "fully grown."
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>How the 100 Points Break Down</h2>
+      <p class="note" style="margin-top:0;">Every score on this site (staff, candidates, team) is built from these three weighted categories. Industry Expertise is tracked but not scored &mdash; more on that below.</p>
+
+      <div class="weight-stack">
+        <div class="weight-seg" style="width:45%; background:var(--primary-brand);">Platform Expertise · 45%</div>
+        <div class="weight-seg" style="width:30%; background:var(--secondary-brand);">Tech Categoric · 30%</div>
+        <div class="weight-seg" style="width:25%; background:var(--tertiary-brand);">Business · 25%</div>
+      </div>
+
+      <div class="start-cat-grid">
+        <div class="start-cat-card">
+          <div class="start-cat-head" style="border-top:4px solid var(--primary-brand);">
+            <span class="weight-tag w-platform">45%</span>
+            <h3>Platform Expertise</h3>
+          </div>
+          <p>Hands-on depth across the specific Adobe tools clients are actually paying us to run. This carries the
+          most weight because credibility in the room depends on being able to go under the hood, not just gesture
+          at the roadmap.</p>
+          <div class="tags" id="startPlatformTags"></div>
+        </div>
+
+        <div class="start-cat-card">
+          <div class="start-cat-head" style="border-top:4px solid var(--secondary-brand);">
+            <span class="weight-tag w-tech">30%</span>
+            <h3>Technology Categoric Expertise</h3>
+          </div>
+          <p>The connective tissue between tools &mdash; content, data, integrations, governance, modernization, and
+          AI. This is what turns a pile of platform licenses into an actual working ecosystem for a client.</p>
+          <div class="tags" id="startTechTags"></div>
+        </div>
+
+        <div class="start-cat-card">
+          <div class="start-cat-head" style="border-top:4px solid var(--tertiary-brand);">
+            <span class="weight-tag w-biz">25%</span>
+            <h3>Business Expertise</h3>
+          </div>
+          <p>The human and organizational skill that makes the technical work land: leading executives, holding a
+          room through ambiguity, and orchestrating a pod without formal authority.</p>
+          <div class="tags" id="startBizTags"></div>
+        </div>
+
+        <div class="start-cat-card">
+          <div class="start-cat-head" style="border-top:4px solid var(--on-surface-subtle);">
+            <span class="weight-tag" style="background:var(--surface-container-mid); color:var(--on-surface-subtle);">tag only</span>
+            <h3>Industry Expertise</h3>
+          </div>
+          <p>Not scored, because depth in one industry doesn't make someone a better or worse architect &mdash; it
+          just means they've solved these problems in this vertical before. We track it as a staffing filter, not a
+          grade.</p>
+          <div class="tags" id="startIndustryTags"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Nobody Needs to Be a 100 Today</h2>
+      <p style="font-size:15px; line-height:1.7; color:var(--on-surface-subtle); max-width:760px; margin-top:0;">
+        The long-term goal is a team where everyone eventually covers the full spread of competencies above. That's
+        a multi-year bar, not a hiring bar. When we're bringing new EAs on board today, we're looking for candidates
+        who land in the <b style="color:var(--on-surface);">75&ndash;85% range</b> against the ideal benchmark &mdash;
+        strong enough to be credible and productive from day one, with clear, specific gaps we can close through
+        pairing, certification pushes, or bootcamps once they're in seat. A candidate scoring below that isn't
+        disqualified outright, but it does mean a longer runway before they can carry an engagement solo. A
+        candidate scoring near 100 on paper is worth a second look too &mdash; verify the depth is real before
+        assuming it de-risks the hire.
+      </p>
+
+      <div id="scoreBandScale" style="margin-top:20px;"></div>
+    </div>
+
+  </div>
+
   <!-- ===================== TEAM VIEW ===================== -->
-  <div class="view active" id="view-team">
+  <div class="view" id="view-team">
 
     <div class="staff-row" id="staffRow"></div>
     <div class="add-form" style="margin-bottom:24px;">
@@ -909,8 +1007,74 @@ function renderCandidateResults(parsed){
   document.getElementById("candidateSummary").textContent = parsed.summary || "";
 }
 
+/* ---------- start here page ---------- */
+function staticTags(containerId, items){
+  const c = document.getElementById(containerId);
+  if(!c) return;
+  c.innerHTML = "";
+  items.forEach(name=>{
+    const tag = document.createElement("div");
+    tag.className = "tag";
+    tag.style.cursor = "default";
+    tag.textContent = name;
+    c.appendChild(tag);
+  });
+}
+
+function renderStartHere(){
+  staticTags("startPlatformTags", PLATFORM_ITEMS);
+  staticTags("startTechTags", TECH_ITEMS);
+  staticTags("startBizTags", BIZ_ITEMS.map(i=>i.name));
+  staticTags("startIndustryTags", INDUSTRIES);
+  drawScoreBandScale();
+}
+
+function drawScoreBandScale(){
+  const el = document.getElementById("scoreBandScale");
+  if(!el) return;
+  const w = 900, h = 130, barY = 50, barH = 24;
+  const bands = [
+    {from:0, to:40, label:"Emerging"},
+    {from:40, to:60, label:"Developing"},
+    {from:60, to:75, label:"Proficient"},
+    {from:75, to:85, label:"Hire Target"},
+    {from:85, to:100, label:"Full Spectrum"}
+  ];
+  let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:auto; overflow:visible;">`;
+  svg += `<defs><linearGradient id="bandGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="rgb(249,97,93)"/>
+    <stop offset="50%" stop-color="rgb(255,211,140)"/>
+    <stop offset="100%" stop-color="rgb(37,218,83)"/>
+  </linearGradient></defs>`;
+  svg += `<rect x="0" y="${barY}" width="${w}" height="${barH}" rx="12" fill="url(#bandGrad)"/>`;
+
+  // highlight the hire-target zone (75-85) with an outline callout
+  const hx1 = (75/100)*w, hx2 = (85/100)*w;
+  svg += `<rect x="${hx1}" y="${barY-6}" width="${hx2-hx1}" height="${barH+12}" rx="8" fill="none" stroke="#1F1F1F" stroke-width="2.5"/>`;
+
+  bands.forEach(b=>{
+    const x1 = (b.from/100)*w, x2 = (b.to/100)*w;
+    const mid = (x1+x2)/2;
+    const isTarget = b.label === "Hire Target";
+    svg += `<text x="${mid}" y="${barY-14}" font-size="12" font-weight="${isTarget?700:600}" fill="${isTarget?'#1F1F1F':'#505050'}" text-anchor="middle" font-family="Work Sans, sans-serif">${b.label}</text>`;
+    if(b.from>0){
+      svg += `<line x1="${x1}" y1="${barY}" x2="${x1}" y2="${barY+barH}" stroke="#fff" stroke-width="2" opacity="0.7"/>`;
+    }
+  });
+
+  [0,25,50,75,85,100].forEach(t=>{
+    const x = (t/100)*w;
+    svg += `<line x1="${x}" y1="${barY+barH}" x2="${x}" y2="${barY+barH+6}" stroke="#C7C7C7" stroke-width="1"/>`;
+    svg += `<text x="${x}" y="${barY+barH+22}" font-size="11" fill="#505050" text-anchor="middle" font-family="Work Sans, sans-serif">${t}</text>`;
+  });
+
+  svg += `</svg>`;
+  el.innerHTML = svg;
+}
+
 /* ---------- init ---------- */
 document.getElementById("buildTag").textContent = "Updated " + new Date().toLocaleDateString("en-US", {year:"numeric", month:"short", day:"numeric"});
+renderStartHere();
 renderTeamView();
 renderIdealSliders();
 </script>
