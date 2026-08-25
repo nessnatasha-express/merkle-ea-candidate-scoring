@@ -19,7 +19,9 @@
     --tertiary-brand:#6311CB;
     --tertiary-container:#EFECFF;
     --tertiary-on-container:#240D4D;
-    --merkle-red:#F9615D;
+    --systems-green:#0E9F6E;
+    --systems-green-container:#DCF5EC;
+    --systems-green-on-container:#04382A;
     --on-surface:#1F1F1F;
     --on-surface-subtle:#505050;
     --surface-body:#FCFCFC;
@@ -101,7 +103,7 @@
   .card h2{font-size:20px; font-weight:700; margin:0 0 4px;}
   .card .weight-tag{display:inline-block; font-size:12px; font-weight:700; letter-spacing:0.04em; padding:2px 10px; border-radius:var(--radius-full); margin-bottom:14px;}
   .w-platform{background:var(--primary-container); color:var(--primary-on-container);}
-  .w-tech{background:var(--secondary-container); color:var(--secondary-on-container);}
+  .w-tech{background:var(--systems-green-container); color:var(--systems-green-on-container);}
   .w-biz{background:var(--tertiary-container); color:var(--tertiary-on-container);}
 
   /* staff switcher */
@@ -179,14 +181,11 @@
 
   .sh-badge{display:inline-block; width:fit-content; font-size:12px; font-weight:700; letter-spacing:0.02em; padding:4px 12px; border-radius:var(--radius-full); color:#fff;}
   .sh-badge-platform{background:var(--primary-brand);}
-  .sh-badge-tech{background:var(--merkle-red);}
+  .sh-badge-tech{background:var(--systems-green);}
   .sh-badge-biz{background:var(--tertiary-brand);}
   .sh-badge-industry{background:#3A3A3A; color:#fff;}
 
-  .cat-platform .tags .tag{border-color:var(--primary-brand); color:var(--primary-brand);}
-  .cat-tech .tags .tag{border-color:var(--merkle-red); color:var(--merkle-red);}
-  .cat-biz .tags .tag{border-color:var(--tertiary-brand); color:var(--tertiary-brand);}
-  .cat-industry .tags .tag{border-color:#3A3A3A; color:#3A3A3A;}
+  .start-cat-card .tags .tag{background:var(--surface-container-mid); border-color:transparent; color:var(--on-surface-subtle);}
 
   /* candidate review */
   textarea#resumeInput{
@@ -267,8 +266,8 @@
       <p class="note" style="margin-top:0;">Every score on this site (staff, candidates, team) is built from these three weighted categories. Industry Expertise is tracked but not scored &mdash; more on that below.</p>
 
       <div class="weight-stack">
-        <div class="weight-seg" style="width:40%; background:var(--primary-brand);">Platform Expertise · 40%</div>
-        <div class="weight-seg" style="width:30%; background:var(--merkle-red);">Tech Categoric · 30%</div>
+        <div class="weight-seg" style="width:40%; background:var(--primary-brand);">Platform Prowess · 40%</div>
+        <div class="weight-seg" style="width:30%; background:var(--systems-green);">Systems Intelligence · 30%</div>
         <div class="weight-seg" style="width:30%; background:var(--tertiary-brand);">Business · 30%</div>
       </div>
 
@@ -276,7 +275,7 @@
         <div class="start-cat-card cat-platform">
           <div class="start-cat-head">
             <span class="sh-badge sh-badge-platform">40%</span>
-            <h3>Platform Expertise</h3>
+            <h3>Platform Prowess</h3>
           </div>
           <p>Hands-on depth across the specific Adobe tools clients are actually paying us to run. This carries the
           most weight because credibility in the room depends on being able to go under the hood, not just gesture
@@ -287,7 +286,7 @@
         <div class="start-cat-card cat-tech">
           <div class="start-cat-head">
             <span class="sh-badge sh-badge-tech">30%</span>
-            <h3>Technology Categoric Expertise</h3>
+            <h3>Systems Intelligence</h3>
           </div>
           <p>The connective tissue between tools &mdash; content, data, integrations, governance, modernization, and
           AI. This is what turns a pile of platform licenses into an actual working ecosystem for a client.</p>
@@ -297,7 +296,7 @@
         <div class="start-cat-card cat-biz">
           <div class="start-cat-head">
             <span class="sh-badge sh-badge-biz">30%</span>
-            <h3>Business Expertise</h3>
+            <h3>Business Acumen</h3>
           </div>
           <p>The human and organizational skill that makes the technical work land: leading executives, holding a
           room through ambiguity, and orchestrating a pod without formal authority.</p>
@@ -322,7 +321,7 @@
       <p style="font-size:15px; line-height:1.7; color:var(--on-surface-subtle); max-width:760px; margin-top:0;">
         The long-term goal is a team where everyone eventually covers the full spread of competencies above. That's
         a multi-year bar, not a hiring bar. When we're bringing new EAs on board today, we're looking for candidates
-        who land in the <b style="color:var(--on-surface);">75&ndash;85% range</b> against the ideal benchmark &mdash;
+        who land in the <b style="color:var(--on-surface);">70&ndash;80% range</b> against the ideal benchmark &mdash;
         strong enough to be credible and productive from day one, with clear, specific gaps we can close through
         pairing, certification pushes, or bootcamps once they're in seat. A candidate scoring below that isn't
         disqualified outright, but it does mean a longer runway before they can carry an engagement solo. A
@@ -353,11 +352,7 @@
       </p>
     </div>
 
-    <div class="staff-row" id="staffRow"></div>
-    <div class="add-form" style="margin-bottom:24px;">
-      <input type="text" id="newStaffName" placeholder="Add teammate name">
-      <button onclick="addStaff()">+ Add</button>
-    </div>
+    <div class="staff-row" id="staffRow" style="margin-bottom:24px;"></div>
 
     <div class="grid">
       <div class="card">
@@ -451,19 +446,19 @@
 
       <div class="legend" style="margin-top:20px;">
         <span><span class="sw" style="background:var(--primary-brand);"></span> Candidate score</span>
-        <span><span class="sw" style="background:var(--on-surface);"></span> Ideal benchmark (line)</span>
+        <span><span class="sw" style="background:rgba(31,31,31,0.3); border:1px solid #1F1F1F;"></span> Ideal range (70&ndash;80, shaded)</span>
       </div>
 
       <div class="subsection" id="sec-platform" style="scroll-margin-top:16px;">
-        <h3>Platform Expertise</h3>
+        <h3>Platform Prowess</h3>
         <div id="compareplatform"></div>
       </div>
       <div class="subsection" id="sec-tech" style="scroll-margin-top:16px;">
-        <h3>Technology Categoric Expertise</h3>
+        <h3>Systems Intelligence</h3>
         <div id="comparetech"></div>
       </div>
       <div class="subsection" id="sec-biz" style="scroll-margin-top:16px;">
-        <h3>Business Expertise</h3>
+        <h3>Business Acumen</h3>
         <div id="comparebiz"></div>
       </div>
       <div class="subsection" id="sec-industries" style="scroll-margin-top:16px;">
@@ -519,6 +514,12 @@
           <p style="font-size:14px; line-height:1.7; color:var(--on-surface-subtle);">This rolls up every current teammate's scores from Team DNA into one view: where the bench is strong, where it's thin, and what that means for staffing versus training decisions.</p>
         </div>
       </div>
+
+      <div class="subsection">
+        <h3>Where the Bench Lands (0&ndash;100)</h3>
+        <p class="note" style="margin-top:0;">Each teammate's composite score against the ideal candidate benchmark, same scale used in Candidate Review.</p>
+        <div id="colorScaleTeam" style="margin-top:10px;"></div>
+      </div>
     </div>
 
     <div class="card">
@@ -548,7 +549,7 @@
 </div>
 
 <script>
-const PLATFORM_ITEMS = ["AEP","AJO","CJA","AEM Sites","AEM Assets","RTCDP","Marketo","Firefly","GenStudio","Workfront","Adobe Launch/Tagging","AI / Custom Agents","Engineering"];
+const PLATFORM_ITEMS = ["AEP","AJO","CJA","AEM Sites","AEM Assets","RTCDP","Marketo","Firefly","GenStudio","Workfront","Adobe Launch/Tagging","Adobe Commerce","AI / Custom Agents","Engineering"];
 const TECH_ITEMS = ["Content Management","Data Management","Infrastructure + Integrations","Governance","Platform Modernization","AI Expertise"];
 const BIZ_ITEMS = [
   {name:"Client Leadership", activities:"Executive readouts, stakeholder alignment", deliverables:"Business case narratives, trusted advisor relationships"},
@@ -556,7 +557,7 @@ const BIZ_ITEMS = [
   {name:"Navigating Ambiguity", activities:"Adapting scope mid-engagement", deliverables:"Revised plans under shifting constraints"},
   {name:"Solution Design", activities:"Requirements translation, architecture sequencing, roadmap ownership", deliverables:"Solution designs, 12-month activation roadmap"},
   {name:"Transformation", activities:"Change management, org readiness", deliverables:"Transformation roadmaps"},
-  {name:"Cross-GTM Expertise", activities:"Aligning pre-sales, delivery, account teams", deliverables:"Coordinated go-to-market motion"}
+  {name:"Cross-GTM Agency Expertise", activities:"Aligning pre-sales, delivery, account teams", deliverables:"Coordinated go-to-market motion"}
 ];
 const INDUSTRIES = ["Finance","QSR","Healthcare","SaaS","Manufacturing","Pharmaceutical","Technology","Other"];
 const GTM_MODELS = ["B2B","B2B2C","D2C","B2C","Channel-Led","Product-Led"];
@@ -573,23 +574,23 @@ function blankProfile(){
 
 const STAFF = {
   "natasha": Object.assign({name:"Natasha Ness", role:"Enterprise Architect", initials:"NN"}, {
-    platform:{"AEP":3,"AJO":4,"CJA":3,"AEM Sites":2,"AEM Assets":3,"RTCDP":5,"Marketo":5,"Firefly":5,"GenStudio":5,"Workfront":5,"Adobe Launch/Tagging":2,"AI / Custom Agents":5,"Engineering":3},
-    tech:{"Content Management":5,"Data Management":4,"Infrastructure + Integrations":4,"Governance":4,"Platform Modernization":5,"AI Expertise":5},
-    biz:{"Client Leadership":5,"Team Orchestration":5,"Navigating Ambiguity":5,"Solution Design":5,"Transformation":5,"Cross-GTM Expertise":5},
+    platform:{"AEP":3,"AJO":4,"CJA":3,"AEM Sites":2,"AEM Assets":3,"RTCDP":3,"Marketo":5,"Firefly":5,"GenStudio":5,"Workfront":5,"Adobe Launch/Tagging":2,"Adobe Commerce":2,"AI / Custom Agents":5,"Engineering":3},
+    tech:{"Content Management":5,"Data Management":4,"Infrastructure + Integrations":4,"Governance":5,"Platform Modernization":5,"AI Expertise":5},
+    biz:{"Client Leadership":5,"Team Orchestration":5,"Navigating Ambiguity":5,"Solution Design":5,"Transformation":5,"Cross-GTM Agency Expertise":5},
     industries:["Healthcare","Pharmaceutical","Finance","Technology","SaaS","Manufacturing","QSR"],
-    gtmModels:["B2B","D2C","Channel-Led","Product-Led"]
+    gtmModels:["B2B","B2B2C","D2C","B2C","Channel-Led","Product-Led"]
   }),
   "aditya": Object.assign({name:"Aditya Vedula", role:"Enterprise Architect", initials:"AV"}, {
-    platform:{"AEP":3,"AJO":0,"CJA":0,"AEM Sites":5,"AEM Assets":5,"RTCDP":3,"Marketo":0,"Firefly":0,"GenStudio":0,"Workfront":4,"Adobe Launch/Tagging":3,"AI / Custom Agents":5,"Engineering":5},
-    tech:{"Content Management":5,"Data Management":5,"Infrastructure + Integrations":5,"Governance":4,"Platform Modernization":5,"AI Expertise":5},
-    biz:{"Client Leadership":5,"Team Orchestration":5,"Navigating Ambiguity":4,"Solution Design":5,"Transformation":5,"Cross-GTM Expertise":5},
+    platform:{"AEP":5,"AJO":0,"CJA":0,"AEM Sites":3,"AEM Assets":3,"RTCDP":5,"Marketo":0,"Firefly":0,"GenStudio":0,"Workfront":4,"Adobe Launch/Tagging":3,"Adobe Commerce":0,"AI / Custom Agents":5,"Engineering":5},
+    tech:{"Content Management":3,"Data Management":5,"Infrastructure + Integrations":5,"Governance":4,"Platform Modernization":5,"AI Expertise":5},
+    biz:{"Client Leadership":5,"Team Orchestration":5,"Navigating Ambiguity":4,"Solution Design":5,"Transformation":5,"Cross-GTM Agency Expertise":5},
     industries:["Finance","Manufacturing","Technology","Other"],
     gtmModels:["B2B"]
   }),
   "gowtami": Object.assign({name:"Gowtami Mohanty", role:"Enterprise Architect", initials:"GM"}, {
-    platform:{"AEP":5,"AJO":5,"CJA":4,"AEM Sites":1,"AEM Assets":1,"RTCDP":5,"Marketo":4,"Firefly":0,"GenStudio":0,"Workfront":1,"Adobe Launch/Tagging":4,"AI / Custom Agents":5,"Engineering":2},
+    platform:{"AEP":5,"AJO":5,"CJA":4,"AEM Sites":1,"AEM Assets":1,"RTCDP":5,"Marketo":4,"Firefly":0,"GenStudio":0,"Workfront":1,"Adobe Launch/Tagging":4,"Adobe Commerce":0,"AI / Custom Agents":5,"Engineering":2},
     tech:{"Content Management":1,"Data Management":5,"Infrastructure + Integrations":4,"Governance":1,"Platform Modernization":4,"AI Expertise":5},
-    biz:{"Client Leadership":4,"Team Orchestration":5,"Navigating Ambiguity":3,"Solution Design":4,"Transformation":5,"Cross-GTM Expertise":2},
+    biz:{"Client Leadership":4,"Team Orchestration":5,"Navigating Ambiguity":3,"Solution Design":4,"Transformation":5,"Cross-GTM Agency Expertise":4},
     industries:["Healthcare","Finance","Technology"],
     gtmModels:["B2B","B2C"]
   })
@@ -599,17 +600,6 @@ let staffCounter = 0;
 
 function initials(name){
   return name.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase();
-}
-
-function addStaff(){
-  const input = document.getElementById("newStaffName");
-  const name = input.value.trim();
-  if(!name) return;
-  const key = "staff_" + (staffCounter++);
-  STAFF[key] = Object.assign({name:name, role:"Enterprise Architect", initials:initials(name)}, blankProfile());
-  input.value = "";
-  activeStaff = key;
-  renderTeamView();
 }
 
 /* ---------- tabs ---------- */
@@ -682,9 +672,9 @@ function drawRadar(elId, series){
 
 /* ---------- team view rendering ---------- */
 const CATEGORIES = [
-  {key:"platform", label:"Platform Expertise", weightClass:"w-platform", weightPct:"40%"},
-  {key:"tech", label:"Technology Categoric Expertise", weightClass:"w-tech", weightPct:"30%"},
-  {key:"biz", label:"Business Expertise", weightClass:"w-biz", weightPct:"30%"}
+  {key:"platform", label:"Platform Prowess", weightClass:"w-platform", weightPct:"40%", color:"var(--primary-brand)"},
+  {key:"tech", label:"Systems Intelligence", weightClass:"w-tech", weightPct:"30%", color:"var(--systems-green)"},
+  {key:"biz", label:"Business Acumen", weightClass:"w-biz", weightPct:"30%", color:"var(--tertiary-brand)"}
 ];
 let activeCategoryIndex = 0;
 
@@ -730,8 +720,10 @@ function renderCategorySummary(){
   row.innerHTML = "";
   CATEGORIES.forEach((cat, i)=>{
     const item = document.createElement("div");
-    item.className = "cat-summary-item" + (i === activeCategoryIndex ? " active" : "");
-    item.innerHTML = `<div class="cs-label">${cat.label}</div><div class="cs-pct">${pcts[cat.key]}%</div>`;
+    const isActive = i === activeCategoryIndex;
+    item.className = "cat-summary-item" + (isActive ? " active" : "");
+    if(isActive) item.style.borderColor = cat.color;
+    item.innerHTML = `<div class="cs-label">${cat.label}</div><div class="cs-pct" style="color:${cat.color};">${pcts[cat.key]}%</div>`;
     item.onclick = ()=>{ activeCategoryIndex = i; renderCategoryCarousel(); };
     row.appendChild(item);
   });
@@ -849,6 +841,13 @@ function renderTeamAggregate(){
     ).join("");
   }
 
+  const scaleMarkers = [];
+  members.forEach((m,i)=>{
+    const color = RADAR_COLOR_OVERRIDES[m.name] || RADAR_PALETTE[i % RADAR_PALETTE.length];
+    scaleMarkers.push({label:m.name.split(" ")[0], pct: compositePercent(m), kind:"staff", color:color});
+  });
+  drawColorScale(scaleMarkers, "colorScaleTeam", {from:70, to:80, label:"Ideal Range"});
+
   const allItems = [
     ...PLATFORM_ITEMS.map(i=>({name:i, cat:"Platform", val:platformAvg[i]})),
     ...TECH_ITEMS.map(i=>({name:i, cat:"Tech Categoric", val:techAvg[i]})),
@@ -917,18 +916,26 @@ function compositePercent(profile){
   return (composite5/5)*100;
 }
 
-function drawColorScale(markers){
-  // markers: [{label, pct, kind: "ideal"|"candidate"|"staff"}]
-  const w = 900, h = 120, barY = 46, barH = 20;
+function drawColorScale(markers, targetId, band){
+  targetId = targetId || "colorScale";
+  // markers: [{label, pct, kind: "candidate"|"staff", color?}]
+  // band: {from, to, label} - shaded "ideal range" zone drawn on the bar instead of a single point
+  const w = 900, h = 130, barY = 56, barH = 20;
   let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:auto; overflow:visible;">`;
 
-  const gradId = "scaleGrad";
+  const gradId = "scaleGrad-" + targetId;
   svg += `<defs><linearGradient id="${gradId}" x1="0" y1="0" x2="1" y2="0">
     <stop offset="0%" stop-color="rgb(249,97,93)"/>
     <stop offset="50%" stop-color="rgb(255,211,140)"/>
     <stop offset="100%" stop-color="rgb(37,218,83)"/>
   </linearGradient></defs>`;
   svg += `<rect x="0" y="${barY}" width="${w}" height="${barH}" rx="10" fill="url(#${gradId})"/>`;
+
+  if(band){
+    const bx1 = (band.from/100)*w, bx2 = (band.to/100)*w;
+    svg += `<rect x="${bx1}" y="${barY-6}" width="${bx2-bx1}" height="${barH+12}" rx="8" fill="rgba(31,31,31,0.10)" stroke="#1F1F1F" stroke-width="2"/>`;
+    svg += `<text x="${(bx1+bx2)/2}" y="${barY-14}" font-size="12" font-weight="700" fill="#1F1F1F" text-anchor="middle" font-family="Work Sans, sans-serif">${band.label} (${band.from}&ndash;${band.to})</text>`;
+  }
 
   [0,25,50,75,100].forEach(t=>{
     const x = (t/100)*w;
@@ -940,17 +947,17 @@ function drawColorScale(markers){
   sorted.forEach((m,i)=>{
     const x = (Math.max(0,Math.min(100,m.pct))/100)*w;
     const above = i % 2 === 0;
-    const labelY = above ? barY - 12 - (Math.floor(i/2)*14) : barY + barH + 34 + (Math.floor(i/2)*14);
+    const labelY = above ? barY - 12 - (Math.floor(i/2)*14) - (band ? 16 : 0) : barY + barH + 34 + (Math.floor(i/2)*14);
     const lineY1 = above ? labelY + 4 : barY + barH;
     const lineY2 = above ? barY : labelY - 8;
-    const markerColor = m.kind === "ideal" ? "#1F1F1F" : (m.kind === "candidate" ? "#0328D1" : "#6311CB");
-    svg += `<line x1="${x}" y1="${lineY1}" x2="${x}" y2="${lineY2}" stroke="${markerColor}" stroke-width="1.5" stroke-dasharray="${m.kind==='ideal'?'4,3':'0'}"/>`;
+    const markerColor = m.color || (m.kind === "candidate" ? "#0328D1" : "#6311CB");
+    svg += `<line x1="${x}" y1="${lineY1}" x2="${x}" y2="${lineY2}" stroke="${markerColor}" stroke-width="1.5"/>`;
     svg += `<circle cx="${x}" cy="${barY+barH/2}" r="6" fill="${markerColor}" stroke="#fff" stroke-width="2"/>`;
     svg += `<text x="${x}" y="${labelY}" font-size="12" font-weight="600" fill="${markerColor}" text-anchor="middle" font-family="Work Sans, sans-serif">${m.label} (${Math.round(m.pct)})</text>`;
   });
 
   svg += `</svg>`;
-  document.getElementById("colorScale").innerHTML = svg;
+  document.getElementById(targetId).innerHTML = svg;
 }
 
 function toggleIdeal(){
@@ -960,11 +967,11 @@ function toggleIdeal(){
 function renderIdealSliders(){
   const c = document.getElementById("idealSliders");
   c.innerHTML = "";
-  const h1 = document.createElement("h3"); h1.textContent = "Platform Expertise"; h1.style.cssText="font-size:13px;text-transform:uppercase;color:var(--on-surface-subtle);margin:12px 0 8px;"; c.appendChild(h1);
+  const h1 = document.createElement("h3"); h1.textContent = "Platform Prowess"; h1.style.cssText="font-size:13px;text-transform:uppercase;color:var(--on-surface-subtle);margin:12px 0 8px;"; c.appendChild(h1);
   PLATFORM_ITEMS.forEach(item=> sliderRow(c, item, IDEAL.platform[item], v=>{ IDEAL.platform[item]=v; }));
-  const h2 = document.createElement("h3"); h2.textContent = "Technology Categoric Expertise"; h2.style.cssText="font-size:13px;text-transform:uppercase;color:var(--on-surface-subtle);margin:12px 0 8px;"; c.appendChild(h2);
+  const h2 = document.createElement("h3"); h2.textContent = "Systems Intelligence"; h2.style.cssText="font-size:13px;text-transform:uppercase;color:var(--on-surface-subtle);margin:12px 0 8px;"; c.appendChild(h2);
   TECH_ITEMS.forEach(item=> sliderRow(c, item, IDEAL.tech[item], v=>{ IDEAL.tech[item]=v; }));
-  const h3 = document.createElement("h3"); h3.textContent = "Business Expertise"; h3.style.cssText="font-size:13px;text-transform:uppercase;color:var(--on-surface-subtle);margin:12px 0 8px;"; c.appendChild(h3);
+  const h3 = document.createElement("h3"); h3.textContent = "Business Acumen"; h3.style.cssText="font-size:13px;text-transform:uppercase;color:var(--on-surface-subtle);margin:12px 0 8px;"; c.appendChild(h3);
   BIZ_ITEMS.forEach(item=> sliderRow(c, item.name, IDEAL.biz[item.name], v=>{ IDEAL.biz[item.name]=v; }));
 }
 
@@ -1010,7 +1017,7 @@ Score the candidate 0-5 (0 = no evidence, 5 = expert/demonstrated mastery) on ea
 
 Platform items: ${PLATFORM_ITEMS.join(", ")}
 Technology Categoric items: ${TECH_ITEMS.join(", ")}
-Business Expertise items: ${BIZ_ITEMS.map(i=>i.name).join(", ")}
+Business Acumen items: ${BIZ_ITEMS.map(i=>i.name).join(", ")}
 Industries to detect (only include ones with clear evidence): ${INDUSTRIES.join(", ")}
 GTM/business models to detect (only include ones with clear evidence): ${GTM_MODELS.join(", ")}
 
@@ -1021,9 +1028,9 @@ ${text}
 
 Respond with ONLY valid JSON, no markdown fences, no preamble, in this exact shape:
 {
-  "platform": {"AEP":0,"AJO":0,"CJA":0,"AEM Sites":0,"AEM Assets":0,"RTCDP":0,"Marketo":0,"Firefly":0,"GenStudio":0,"Workfront":0,"Adobe Launch/Tagging":0,"AI / Custom Agents":0,"Engineering":0},
+  "platform": {"AEP":0,"AJO":0,"CJA":0,"AEM Sites":0,"AEM Assets":0,"RTCDP":0,"Marketo":0,"Firefly":0,"GenStudio":0,"Workfront":0,"Adobe Launch/Tagging":0,"Adobe Commerce":0,"AI / Custom Agents":0,"Engineering":0},
   "tech": {"Content Management":0,"Data Management":0,"Infrastructure + Integrations":0,"Governance":0,"Platform Modernization":0,"AI Expertise":0},
-  "biz": {"Client Leadership":0,"Team Orchestration":0,"Navigating Ambiguity":0,"Solution Design":0,"Transformation":0,"Cross-GTM Expertise":0},
+  "biz": {"Client Leadership":0,"Team Orchestration":0,"Navigating Ambiguity":0,"Solution Design":0,"Transformation":0,"Cross-GTM Agency Expertise":0},
   "industries": [],
   "gtmModels": [],
   "topStrengths": ["", "", ""],
@@ -1112,15 +1119,13 @@ function renderCandidateResults(parsed){
   const cBiz = parsed.biz || {};
 
   const candidatePct = compositePercent({platform:cPlatform, tech:cTech, biz:cBiz});
-  const idealPct = compositePercent(IDEAL);
   const markers = [
-    {label:"Ideal", pct:idealPct, kind:"ideal"},
     {label:"This Candidate", pct:candidatePct, kind:"candidate"}
   ];
   Object.values(STAFF).forEach(s=>{
     markers.push({label:s.name.split(" ")[0], pct: compositePercent(s), kind:"staff"});
   });
-  drawColorScale(markers);
+  drawColorScale(markers, "colorScale", {from:70, to:80, label:"Ideal Range"});
 
   const platformMatch = categoryMatchPct(cPlatform, IDEAL.platform, PLATFORM_ITEMS);
   const techMatch = categoryMatchPct(cTech, IDEAL.tech, TECH_ITEMS);
@@ -1197,9 +1202,9 @@ function drawScoreBandScale(){
   const bands = [
     {from:0, to:40, label:"Emerging"},
     {from:40, to:60, label:"Developing"},
-    {from:60, to:75, label:"Proficient"},
-    {from:75, to:85, label:"Hire Target"},
-    {from:85, to:100, label:"Full Spectrum"}
+    {from:60, to:70, label:"Proficient"},
+    {from:70, to:80, label:"Hire Target"},
+    {from:80, to:100, label:"Full Spectrum"}
   ];
   let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:auto; overflow:visible;">`;
   svg += `<defs><linearGradient id="bandGrad" x1="0" y1="0" x2="1" y2="0">
@@ -1209,8 +1214,8 @@ function drawScoreBandScale(){
   </linearGradient></defs>`;
   svg += `<rect x="0" y="${barY}" width="${w}" height="${barH}" rx="12" fill="url(#bandGrad)"/>`;
 
-  // highlight the hire-target zone (75-85) with an outline callout
-  const hx1 = (75/100)*w, hx2 = (85/100)*w;
+  // highlight the hire-target zone (70-80) with an outline callout
+  const hx1 = (70/100)*w, hx2 = (80/100)*w;
   svg += `<rect x="${hx1}" y="${barY-6}" width="${hx2-hx1}" height="${barH+12}" rx="8" fill="none" stroke="#1F1F1F" stroke-width="2.5"/>`;
 
   bands.forEach(b=>{
@@ -1223,7 +1228,7 @@ function drawScoreBandScale(){
     }
   });
 
-  [0,25,50,75,85,100].forEach(t=>{
+  [0,25,50,70,80,100].forEach(t=>{
     const x = (t/100)*w;
     svg += `<line x1="${x}" y1="${barY+barH}" x2="${x}" y2="${barY+barH+6}" stroke="#C7C7C7" stroke-width="1"/>`;
     svg += `<text x="${x}" y="${barY+barH+22}" font-size="11" fill="#505050" text-anchor="middle" font-family="Work Sans, sans-serif">${t}</text>`;
