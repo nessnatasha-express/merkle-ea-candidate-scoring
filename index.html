@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DNA of Enterprise Architects | Adobe Integrated Services</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&family=Geist+Mono:wght@400&display=swap');
+
+  :root{
+    --primary-brand:#0328D1;
+    --primary-brand-hover:#1E56FA;
+    --primary-container:#E7EFFF;
+    --primary-on-brand:#FFFFFF;
+    --primary-on-container:#041753;
+    --secondary-brand:#2F98F7;
+    --secondary-container:#E3F0FF;
+    --secondary-on-container:#00203E;
+    --tertiary-brand:#6311CB;
+    --tertiary-container:#EFECFF;
+    --tertiary-on-container:#240D4D;
+    --on-surface:#1F1F1F;
+    --on-surface-subtle:#505050;
+    --surface-body:#FCFCFC;
+    --surface-container-low:#F7F7F7;
+    --surface-container-mid:#EEEEEE;
+    --surface-container-high:#E4E4E4;
+    --surface:#D7D7D7;
+    --border-subtle:#E4E4E4;
+    --border-medium:#D7D7D7;
+    --border-heavy:#C7C7C7;
+    --error:#F9615D;
+    --error-container:#FFE9E6;
+    --success:#25DA53;
+    --success-container:#DAF8DB;
+    --shadow-card: 0.3px 0.5px 0.7px 0px rgba(31,31,31,0.34), 0.4px 0.8px 1px -1.2px rgba(31,31,31,0.34), 1px 2px 2.5px -2.5px rgba(31,31,31,0.34);
+    --radius: 8px;
+    --radius-lg: 16px;
+    --radius-full: 999px;
+  }
+
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:'Work Sans', sans-serif; background:var(--surface-body); color:var(--on-surface);}
+  .wrap{max-width:1080px; margin:0 auto; padding:32px 24px 64px;}
+
+  header.hero{display:flex; flex-direction:column; gap:6px; padding:24px 0 20px; border-bottom:1px solid var(--border-subtle); margin-bottom:20px;}
+  .topbar{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;}
+  .topbar-right{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .build-tag{
+    font-size:11px; font-weight:600; color:var(--on-surface-subtle);
+    background:var(--surface-container-low); border:1px solid var(--border-subtle);
+    padding:4px 10px; border-radius:var(--radius-full); font-family:'Geist Mono', monospace;
+  }
+  .eyebrow{font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--primary-brand);}
+  .tabs{display:flex; gap:8px;}
+  h1{font-size:40px; font-weight:700; letter-spacing:-0.02em; margin:2px 0 0;}
+  .sub{font-size:15px; color:var(--on-surface-subtle); max-width:640px;}
+
+  /* tabs */
+  .tab-btn{
+    padding:10px 20px; border-radius:var(--radius-full); border:1px solid var(--border-medium);
+    background:var(--surface-body); font-size:14px; font-weight:600; cursor:pointer; color:var(--on-surface-subtle);
+  }
+  .tab-btn.active{background:var(--primary-brand); color:#fff; border-color:var(--primary-brand);}
+  .view{display:none;}
+  .view.active{display:block;}
+
+  .card{background:var(--surface-body); border-radius:var(--radius-lg); box-shadow:var(--shadow-card); padding:24px; margin-bottom:20px;}
+  .card h2{font-size:20px; font-weight:700; margin:0 0 4px;}
+  .card .weight-tag{display:inline-block; font-size:12px; font-weight:700; letter-spacing:0.04em; padding:2px 10px; border-radius:var(--radius-full); margin-bottom:14px;}
+  .w-platform{background:var(--primary-container); color:var(--primary-on-container);}
+  .w-tech{background:var(--secondary-container); color:var(--secondary-on-container);}
+  .w-biz{background:var(--tertiary-container); color:var(--tertiary-on-container);}
+
+  /* staff switcher */
+  .staff-row{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; align-items:center;}
+  .staff-pill{display:flex; align-items:center; gap:10px; padding:8px 16px 8px 8px; border-radius:var(--radius-full); background:var(--surface-container-low); cursor:pointer; border:1px solid var(--border-subtle);}
+  .staff-pill .avatar{width:32px;height:32px;border-radius:50%; background:var(--secondary-container); color:var(--secondary-on-container); display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;}
+  .staff-pill .name{font-size:14px;font-weight:600;}
+  .staff-pill .role{font-size:12px;color:var(--on-surface-subtle);}
+  .staff-pill.active{background:var(--primary-container); border-color:var(--primary-brand);}
+  .staff-pill.active .avatar{background:var(--primary-brand); color:#fff;}
+  .add-form{display:flex; gap:6px; align-items:center;}
+  .add-form input{padding:8px 12px; border-radius:var(--radius-full); border:1px solid var(--border-medium); font-size:13px; width:160px;}
+  .add-form button{padding:8px 16px; border-radius:var(--radius-full); border:none; background:var(--surface-container-mid); color:var(--on-surface); font-size:13px; font-weight:600; cursor:pointer;}
+
+  .grid{display:grid; grid-template-columns: 1.1fr 1.4fr; gap:20px;}
+  @media(max-width:860px){.grid{grid-template-columns:1fr;}}
+
+  .composite{text-align:center; padding:14px 0 6px;}
+  .composite .score{font-family:'Geist Mono', monospace; font-size:56px; font-weight:400; color:var(--primary-brand); line-height:1; font-variant-numeric: tabular-nums;}
+  .composite .label{font-size:13px; color:var(--on-surface-subtle); margin-top:6px;}
+
+  svg.radar{display:block; margin:0 auto;}
+
+  .slider-row{margin-bottom:14px;}
+  .slider-row .top{display:flex; justify-content:space-between; font-size:13px; margin-bottom:4px;}
+  .slider-row .top .val{font-family:'Geist Mono', monospace; font-variant-numeric: tabular-nums; color:var(--primary-brand); font-weight:600;}
+  input[type=range]{width:100%; -webkit-appearance:none; height:6px; border-radius:var(--radius-full); background:var(--surface-container-mid); outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--primary-brand); cursor:pointer; border:2px solid #fff; box-shadow:var(--shadow-card);}
+
+  .subsection{margin-top:22px; padding-top:18px; border-top:1px solid var(--border-subtle);}
+  .subsection h3{font-size:14px; font-weight:700; margin:0 0 12px; color:var(--on-surface-subtle); text-transform:uppercase; letter-spacing:0.06em;}
+
+  .biz-comp{background:var(--surface-container-low); border-radius:var(--radius); padding:14px 16px; margin-bottom:12px;}
+  .biz-comp .name{font-size:14px; font-weight:700; margin-bottom:2px;}
+  .biz-comp .meta{font-size:12px; color:var(--on-surface-subtle); margin-bottom:10px; line-height:1.5;}
+  .biz-comp .meta b{color:var(--on-surface);}
+
+  .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;}
+  .tag{font-size:12px; padding:5px 12px; border-radius:var(--radius-full); border:1px solid var(--border-medium); cursor:pointer; user-select:none; color:var(--on-surface-subtle); background:var(--surface-body);}
+  .tag.on{background:var(--tertiary-brand); color:#fff; border-color:var(--tertiary-brand);}
+
+  .note{font-size:12px; color:var(--on-surface-subtle); margin-top:12px; line-height:1.6;}
+
+  /* gaps list */
+  .gap-row{display:flex; align-items:center; gap:12px; padding:10px 0; border-bottom:1px solid var(--border-subtle);}
+  .gap-row:last-child{border-bottom:none;}
+  .gap-row .item{flex:1; font-size:14px; font-weight:600;}
+  .gap-row .cat{font-size:11px; color:var(--on-surface-subtle); text-transform:uppercase; letter-spacing:0.04em;}
+  .gap-row .bar-bg{width:140px; height:8px; background:var(--surface-container-mid); border-radius:var(--radius-full); overflow:hidden;}
+  .gap-row .bar-fill{height:100%; background:var(--error);}
+  .gap-row .num{font-family:'Geist Mono', monospace; font-size:13px; width:32px; text-align:right;}
+
+  /* wins & gaps card grid */
+  .score-card-grid{display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;}
+  @media(max-width:960px){.score-card-grid{grid-template-columns:repeat(2, 1fr);}}
+  @media(max-width:560px){.score-card-grid{grid-template-columns:1fr;}}
+  .score-card{background:var(--surface-container-low); border-radius:var(--radius); padding:16px; display:flex; flex-direction:column; gap:8px;}
+  .score-card .sc-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .score-card .sc-score{font-family:'Geist Mono', monospace; font-size:24px; font-weight:600; line-height:1;}
+  .score-card .sc-cat{font-size:10px; text-transform:uppercase; letter-spacing:0.05em; color:var(--on-surface-subtle);}
+  .score-card .sc-title{font-size:14px; font-weight:700;}
+  .score-card .sc-desc{font-size:12px; color:var(--on-surface-subtle); line-height:1.5;}
+  .score-card .sc-bar-bg{height:6px; background:var(--surface-container-mid); border-radius:var(--radius-full); overflow:hidden;}
+  .score-card .sc-bar-fill{height:100%;}
+
+  /* candidate review */
+  textarea#resumeInput{
+    width:100%; min-height:180px; padding:14px; border-radius:var(--radius); border:1px solid var(--border-medium);
+    font-family:'Work Sans', sans-serif; font-size:14px; resize:vertical; background:var(--surface-container-low);
+  }
+  .grade-btn{
+    margin-top:12px; padding:12px 24px; border-radius:var(--radius); border:none; background:var(--primary-brand);
+    color:#fff; font-size:14px; font-weight:600; cursor:pointer;
+  }
+  .grade-btn:disabled{background:var(--surface-container-high); color:var(--on-surface-subtle); cursor:not-allowed;}
+  .grade-btn:hover:not(:disabled){background:var(--primary-brand-hover);}
+
+  .ideal-toggle{font-size:13px; color:var(--primary-brand); cursor:pointer; text-decoration:underline; margin-bottom:12px; display:inline-block;}
+  #idealPanel{display:none;}
+  #idealPanel.open{display:block;}
+
+  .compare-row{display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border-subtle); font-size:13px;}
+  .compare-row:last-child{border-bottom:none;}
+  .compare-row .item{flex:1.4; font-weight:600;}
+  .compare-row .track{flex:2; height:8px; background:var(--surface-container-mid); border-radius:var(--radius-full); position:relative;}
+  .compare-row .cand-fill{position:absolute; top:0; left:0; height:100%; background:var(--primary-brand); border-radius:var(--radius-full);}
+  .compare-row .ideal-mark{position:absolute; top:-3px; width:2px; height:14px; background:var(--on-surface);}
+  .compare-row .nums{width:70px; text-align:right; font-family:'Geist Mono', monospace; font-size:12px;}
+  .legend{display:flex; gap:16px; font-size:12px; color:var(--on-surface-subtle); margin-bottom:10px;}
+  .legend span{display:flex; align-items:center; gap:6px;}
+  .legend .sw{width:10px;height:10px;border-radius:2px;}
+
+  .jump-nav{display:flex; flex-wrap:wrap; gap:8px; margin:16px 0 4px; padding:12px 14px; background:var(--surface-container-low); border-radius:var(--radius);}
+.jump-nav a{font-size:12px; font-weight:600; color:var(--primary-brand); text-decoration:none; padding:5px 12px; border-radius:var(--radius-full); background:var(--surface-body); border:1px solid var(--border-subtle);}
+.jump-nav a:hover{background:var(--primary-container);}
+
+.status-msg{font-size:13px; color:var(--on-surface-subtle); margin-top:10px;}
+  .status-msg.error{color:var(--error);}
+
+  .strengths-gaps{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;}
+  @media(max-width:700px){.strengths-gaps{grid-template-columns:1fr;}}
+  .sg-card{padding:14px; border-radius:var(--radius); background:var(--surface-container-low);}
+  .sg-card h4{font-size:13px; margin:0 0 8px; text-transform:uppercase; letter-spacing:0.04em;}
+  .sg-card ul{margin:0; padding-left:18px; font-size:13px; line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="topbar">
+      <span class="eyebrow">Merkle · Adobe Integrated Services</span>
+      <div class="topbar-right">
+        <span class="build-tag" id="buildTag"></span>
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="team">Team DNA</button>
+          <button class="tab-btn" data-tab="candidate">Candidate Review</button>
+          <button class="tab-btn" data-tab="wins">Wins &amp; Gaps</button>
+        </div>
+      </div>
+    </div>
+    <h1>DNA of Enterprise Architects</h1>
+    <p class="sub">The current team's aggregate strengths and gaps, a candidate scoring tool for resume or profile review, and a rollup of where to invest next.</p>
+  </header>
+
+  <!-- ===================== TEAM VIEW ===================== -->
+  <div class="view active" id="view-team">
+
+    <div class="staff-row" id="staffRow"></div>
+    <div class="add-form" style="margin-bottom:24px;">
+      <input type="text" id="newStaffName" placeholder="Add teammate name">
+      <button onclick="addStaff()">+ Add</button>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h2 id="individualLabel">Individual Score</h2>
+        <div class="composite">
+          <svg class="radar" id="radarIndividual" width="260" height="260" viewBox="0 0 260 260"></svg>
+          <div class="score" id="compositeScoreIndividual">0%</div>
+          <div class="label">weighted, out of 100</div>
+        </div>
+        <div class="subsection">
+          <h3>Industry Experience <span style="font-weight:400; text-transform:none;">(tag only, not scored)</span></h3>
+          <div class="tags" id="industryTags"></div>
+        </div>
+        <div class="subsection">
+          <span class="ideal-toggle" onclick="toggleAutoScore()">Auto-score from resume / LinkedIn text</span>
+          <div id="autoScorePanel" style="display:none;">
+            <p class="note" style="margin-top:0;">Paste this person's resume or LinkedIn profile text (About, Experience, Skills sections). Claude will score them and overwrite their sliders below. This replaces manually dragging every slider yourself.</p>
+            <textarea id="teamResumeInput" style="width:100%; min-height:140px; padding:12px; border-radius:8px; border:1px solid var(--border-medium); font-family:'Work Sans',sans-serif; font-size:13px; background:var(--surface-container-low);" placeholder="Paste resume or profile text here..."></textarea>
+            <br>
+            <button class="grade-btn" id="teamGradeBtn" onclick="gradeTeamMember()" style="margin-top:10px;">Score This Person</button>
+            <div class="status-msg" id="teamStatusMsg"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Platform Expertise <span class="weight-tag w-platform">45%</span></h2>
+        <div id="platformSliders"></div>
+        <div class="subsection">
+          <h3>Technology Categoric Expertise <span class="weight-tag w-tech" style="text-transform:none;">30%</span></h3>
+          <div id="techSliders"></div>
+        </div>
+        <div class="subsection">
+          <h3>Business Expertise <span class="weight-tag w-biz" style="text-transform:none;">25%</span></h3>
+          <div id="bizComp"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== CANDIDATE VIEW ===================== -->
+  <div class="view" id="view-candidate">
+
+    <div class="card">
+      <h2>Score a Candidate</h2>
+      <p class="note" style="margin-top:0;">Paste a resume or LinkedIn profile text below (copy/paste the profile content directly &mdash; this tool cannot fetch LinkedIn URLs live due to their anti-scraping restrictions). Claude will grade it against the same competency model used for the team.</p>
+      <textarea id="resumeInput" placeholder="Paste resume text or LinkedIn profile content here..."></textarea>
+      <br>
+      <button class="grade-btn" id="gradeBtn" onclick="gradeCandidate()">Grade Candidate</button>
+      <div class="status-msg" id="statusMsg"></div>
+    </div>
+
+    <div class="card" id="candidateResults" style="display:none;">
+      <h2>Candidate vs. Ideal</h2>
+      <div class="composite">
+        <span class="score" id="matchPercent" style="font-size:56px;">0%</span>
+        <div class="label">match to ideal candidate benchmark</div>
+        <div class="label" id="matchSubline" style="margin-top:4px;"></div>
+      </div>
+
+      <nav class="jump-nav" aria-label="Jump to section">
+        <a href="#sec-scale">Scale</a>
+        <a href="#sec-platform">Platform</a>
+        <a href="#sec-tech">Tech Categoric</a>
+        <a href="#sec-biz">Business</a>
+        <a href="#sec-industries">Industries</a>
+        <a href="#sec-strengths">Strengths &amp; Gaps</a>
+        <a href="#sec-summary">Summary</a>
+      </nav>
+
+      <div class="subsection" id="sec-scale" style="scroll-margin-top:16px;">
+        <h3>Where Everyone Lands (0&ndash;100)</h3>
+        <div id="colorScale" style="margin-top:10px;"></div>
+      </div>
+
+      <div class="legend" style="margin-top:20px;">
+        <span><span class="sw" style="background:var(--primary-brand);"></span> Candidate score</span>
+        <span><span class="sw" style="background:var(--on-surface);"></span> Ideal benchmark (line)</span>
+      </div>
+
+      <div class="subsection" id="sec-platform" style="scroll-margin-top:16px;">
+        <h3>Platform Expertise</h3>
+        <div id="compareplatform"></div>
+      </div>
+      <div class="subsection" id="sec-tech" style="scroll-margin-top:16px;">
+        <h3>Technology Categoric Expertise</h3>
+        <div id="comparetech"></div>
+      </div>
+      <div class="subsection" id="sec-biz" style="scroll-margin-top:16px;">
+        <h3>Business Expertise</h3>
+        <div id="comparebiz"></div>
+      </div>
+      <div class="subsection" id="sec-industries" style="scroll-margin-top:16px;">
+        <h3>Industries Detected</h3>
+        <div class="tags" id="candidateIndustries"></div>
+      </div>
+
+      <div class="subsection" id="sec-strengths" style="scroll-margin-top:16px;">
+        <div class="strengths-gaps">
+          <div class="sg-card">
+            <h4 style="color:var(--success);">Top Strengths</h4>
+            <ul id="strengthsList"></ul>
+          </div>
+          <div class="sg-card">
+            <h4 style="color:var(--error);">Top Gaps vs. Ideal</h4>
+            <ul id="gapsCandidateList"></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection" id="sec-summary" style="scroll-margin-top:16px;">
+        <h3>Summary</h3>
+        <p id="candidateSummary" style="font-size:14px; line-height:1.6;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== WINS & GAPS VIEW ===================== -->
+  <div class="view" id="view-wins">
+
+    <div class="card">
+      <h2>Team Composite</h2>
+      <p class="note" style="margin-top:0;">Average across every teammate in Team DNA, computed live as ratings change there.</p>
+      <div class="grid">
+        <div style="text-align:center;">
+          <svg class="radar" id="radarTeam" width="260" height="260" viewBox="0 0 260 260"></svg>
+          <div class="score" id="compositeScoreTeam" style="font-family:'Geist Mono',monospace; font-size:44px; color:var(--primary-brand);">0%</div>
+          <div class="label" style="font-size:13px;color:var(--on-surface-subtle);">team composite, out of 100</div>
+          <div id="radarTeamLegend" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:14px;"></div>
+        </div>
+        <div>
+          <p style="font-size:14px; line-height:1.7; color:var(--on-surface-subtle);">This rolls up every current teammate's scores from Team DNA into one view: where the bench is strong, where it's thin, and what that means for staffing versus training decisions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Biggest Gaps <span class="weight-tag" style="background:var(--error-container); color:#3F0709;">hire or upskill</span></h2>
+      <p class="note" style="margin-top:0;">Lowest team-average items, with a suggested response. Ordered lowest first.</p>
+      <div id="gapsListExpanded"></div>
+    </div>
+
+    <div class="card">
+      <h2>Greatest Strengths <span class="weight-tag" style="background:var(--success-container); color:#002807;">lean on these</span></h2>
+      <p class="note" style="margin-top:0;">Highest team-average items. These are safe to pitch to clients and to staff on without backup.</p>
+      <div id="strengthsListExpanded"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="wrap">
+  <div class="card" id="idealBenchmarkCard">
+    <span class="ideal-toggle" onclick="toggleIdeal()">Adjust ideal candidate benchmark</span>
+    <div id="idealPanel">
+      <p class="note" style="margin-top:0;">Default benchmark assumes strong performance across the board. Tune these to reflect what "ideal" means for this specific req &mdash; it feeds the Candidate Review comparison and the 0&ndash;100 scale.</p>
+      <div id="idealSliders"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PLATFORM_ITEMS = ["AEP","AJO","CJA","AEM Sites","AEM Assets","RTCDP","Marketo","Firefly","GenStudio","Workfront","AI / Custom Agents","Engineering"];
+const TECH_ITEMS = ["Content Management","Data Management","Infrastructure + Integrations","Governance","Platform Modernization","AI Expertise"];
+const BIZ_ITEMS = [
+  {name:"Client Leadership", activities:"Executive readouts, stakeholder alignment", deliverables:"Business case narratives, trusted advisor relationships"},
+  {name:"Cross-Team Orchestration", activities:"Pod coordination, delivery team alignment", deliverables:"On-track engagements, minimal friction handoffs"},
+  {name:"Navigating Ambiguity", activities:"Adapting scope mid-engagement", deliverables:"Revised plans under shifting constraints"},
+  {name:"Solution Design", activities:"Requirements translation, architecture sequencing, roadmap ownership", deliverables:"Solution designs, 12-month activation roadmap"},
+  {name:"Transformation", activities:"Change management, org readiness", deliverables:"Transformation roadmaps"},
+  {name:"Cross-GTM Expertise", activities:"Aligning pre-sales, delivery, account teams", deliverables:"Coordinated go-to-market motion"}
+];
+const INDUSTRIES = ["Finance","QSR","Healthcare","SaaS","Manufacturing","Pharmaceutical","Technology","Other"];
+
+function blankProfile(){
+  return {
+    platform:Object.fromEntries(PLATFORM_ITEMS.map(i=>[i,0])),
+    tech:Object.fromEntries(TECH_ITEMS.map(i=>[i,0])),
+    biz:Object.fromEntries(BIZ_ITEMS.map(i=>[i.name,0])),
+    industries:[]
+  };
+}
+
+const STAFF = {
+  "natasha": Object.assign({name:"Natasha Ness", role:"Enterprise Architect", initials:"NN"}, {
+    platform:{"AEP":5,"AJO":4,"CJA":3,"AEM Sites":2,"AEM Assets":4,"RTCDP":5,"Marketo":5,"Firefly":5,"GenStudio":5,"Workfront":5,"AI / Custom Agents":5,"Engineering":4},
+    tech:{"Content Management":5,"Data Management":4,"Infrastructure + Integrations":4,"Governance":4,"Platform Modernization":4,"AI Expertise":5},
+    biz:{"Client Leadership":5,"Cross-Team Orchestration":5,"Navigating Ambiguity":5,"Solution Design":5,"Transformation":5,"Cross-GTM Expertise":5},
+    industries:["Healthcare","Pharmaceutical","Finance","Technology","SaaS","Manufacturing","QSR"]
+  }),
+  "aditya": Object.assign({name:"Aditya Vedula", role:"Enterprise Architect", initials:"AV"}, {
+    platform:{"AEP":3,"AJO":0,"CJA":0,"AEM Sites":5,"AEM Assets":5,"RTCDP":3,"Marketo":0,"Firefly":0,"GenStudio":0,"Workfront":4,"AI / Custom Agents":5,"Engineering":5},
+    tech:{"Content Management":5,"Data Management":5,"Infrastructure + Integrations":5,"Governance":4,"Platform Modernization":5,"AI Expertise":5},
+    biz:{"Client Leadership":5,"Cross-Team Orchestration":5,"Navigating Ambiguity":4,"Solution Design":5,"Transformation":5,"Cross-GTM Expertise":5},
+    industries:["Finance","Manufacturing","Technology","Other"]
+  }),
+  "gowtami": Object.assign({name:"Gowtami Mohanty", role:"Enterprise Architect", initials:"GM"}, {
+    platform:{"AEP":5,"AJO":5,"CJA":4,"AEM Sites":1,"AEM Assets":1,"RTCDP":5,"Marketo":4,"Firefly":0,"GenStudio":0,"Workfront":1,"AI / Custom Agents":5,"Engineering":2},
+    tech:{"Content Management":1,"Data Management":5,"Infrastructure + Integrations":4,"Governance":1,"Platform Modernization":4,"AI Expertise":5},
+    biz:{"Client Leadership":4,"Cross-Team Orchestration":5,"Navigating Ambiguity":3,"Solution Design":4,"Transformation":5,"Cross-GTM Expertise":2},
+    industries:["Healthcare","Finance","Technology"]
+  })
+};
+let activeStaff = "natasha";
+let staffCounter = 0;
+
+function initials(name){
+  return name.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join("").toUpperCase();
+}
+
+function addStaff(){
+  const input = document.getElementById("newStaffName");
+  const name = input.value.trim();
+  if(!name) return;
+  const key = "staff_" + (staffCounter++);
+  STAFF[key] = Object.assign({name:name, role:"Enterprise Architect", initials:initials(name)}, blankProfile());
+  input.value = "";
+  activeStaff = key;
+  renderTeamView();
+}
+
+/* ---------- tabs ---------- */
+document.querySelectorAll(".tab-btn").forEach(btn=>{
+  btn.onclick = ()=>{
+    document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+    document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("view-"+btn.dataset.tab).classList.add("active");
+  };
+});
+
+/* ---------- shared helpers ---------- */
+function avg(obj){
+  const vals = Object.values(obj);
+  return vals.reduce((a,b)=>a+b,0) / vals.length;
+}
+function compositeOf(profile){
+  return avg(profile.platform)*0.45 + avg(profile.tech)*0.30 + avg(profile.biz)*0.25;
+}
+
+function sliderRow(container, label, value, onChange){
+  const row = document.createElement("div");
+  row.className = "slider-row";
+  row.innerHTML = `<div class="top"><span>${label}</span><span class="val">${value.toFixed(1)}</span></div>
+    <input type="range" min="0" max="5" step="0.5" value="${value}">`;
+  const input = row.querySelector("input");
+  const valSpan = row.querySelector(".val");
+  input.oninput = ()=>{ valSpan.textContent = parseFloat(input.value).toFixed(1); onChange(parseFloat(input.value)); renderTeamView(true); };
+  container.appendChild(row);
+  return row;
+}
+
+function drawRadar(elId, series){
+  // series: [{values:[p,t,b], color, dashed}]
+  const svg = document.getElementById(elId);
+  const cx=svg.viewBox.baseVal.width/2, cy=svg.viewBox.baseVal.height/2, R=90;
+  const axes = 3;
+  const labels = ["Platform","Tech Cat.","Business"];
+  let content = "";
+  [1,2,3,4,5].forEach(ring=>{
+    const r = R*(ring/5);
+    let pts = [];
+    for(let i=0;i<axes;i++){
+      const angle = (Math.PI*2*i/axes) - Math.PI/2;
+      pts.push(`${cx+r*Math.cos(angle)},${cy+r*Math.sin(angle)}`);
+    }
+    content += `<polygon points="${pts.join(" ")}" fill="none" stroke="#E4E4E4" stroke-width="1"/>`;
+  });
+  for(let i=0;i<axes;i++){
+    const angle = (Math.PI*2*i/axes) - Math.PI/2;
+    const x = cx+R*Math.cos(angle), y = cy+R*Math.sin(angle);
+    content += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="#D7D7D7" stroke-width="1"/>`;
+    const lx = cx+(R+16)*Math.cos(angle), ly = cy+(R+16)*Math.sin(angle);
+    content += `<text x="${lx}" y="${ly}" font-size="11" fill="#505050" font-family="Work Sans, sans-serif" text-anchor="middle" dominant-baseline="middle">${labels[i]}</text>`;
+  }
+  series.forEach(s=>{
+    let pts = [];
+    for(let i=0;i<axes;i++){
+      const angle = (Math.PI*2*i/axes) - Math.PI/2;
+      const r = R*(s.values[i]/5);
+      pts.push(`${cx+r*Math.cos(angle)},${cy+r*Math.sin(angle)}`);
+    }
+    const dash = s.dashed ? `stroke-dasharray="5,4"` : "";
+    const fillOpacity = s.dashed ? 0 : 0.12;
+    content += `<polygon points="${pts.join(" ")}" fill="${s.color}" fill-opacity="${fillOpacity}" stroke="${s.color}" stroke-width="2" ${dash}/>`;
+  });
+  svg.innerHTML = content;
+}
+
+/* ---------- team view rendering ---------- */
+function renderTeamView(skipStaffRow){
+  if(!skipStaffRow) renderStaffRow();
+  const s = STAFF[activeStaff];
+  document.getElementById("individualLabel").textContent = s.name + "'s Score";
+
+  const pc = document.getElementById("platformSliders"); pc.innerHTML = "";
+  PLATFORM_ITEMS.forEach(item=> sliderRow(pc, item, s.platform[item], v=>{ s.platform[item]=v; }));
+
+  const tc = document.getElementById("techSliders"); tc.innerHTML = "";
+  TECH_ITEMS.forEach(item=> sliderRow(tc, item, s.tech[item], v=>{ s.tech[item]=v; }));
+
+  const bc = document.getElementById("bizComp"); bc.innerHTML = "";
+  BIZ_ITEMS.forEach(item=>{
+    const wrap = document.createElement("div");
+    wrap.className = "biz-comp";
+    wrap.innerHTML = `<div class="name">${item.name}</div><div class="meta"><b>Activities:</b> ${item.activities}<br><b>Deliverables:</b> ${item.deliverables}</div>`;
+    sliderRow(wrap, "Rating", s.biz[item.name], v=>{ s.biz[item.name]=v; });
+    bc.appendChild(wrap);
+  });
+
+  const tagsC = document.getElementById("industryTags"); tagsC.innerHTML = "";
+  INDUSTRIES.forEach(ind=>{
+    const tag = document.createElement("div");
+    tag.className = "tag" + (s.industries.includes(ind) ? " on" : "");
+    tag.textContent = ind;
+    tag.onclick = ()=>{
+      if(s.industries.includes(ind)) s.industries = s.industries.filter(i=>i!==ind);
+      else s.industries.push(ind);
+      renderTeamView(true);
+    };
+    tagsC.appendChild(tag);
+  });
+
+  document.getElementById("compositeScoreIndividual").textContent = Math.round(compositePercent(s)) + "%";
+  drawRadar("radarIndividual", [{values:[avg(s.platform),avg(s.tech),avg(s.biz)], color:"#0328D1"}]);
+
+  renderTeamAggregate();
+}
+
+function renderStaffRow(){
+  const row = document.getElementById("staffRow");
+  row.innerHTML = "";
+  Object.keys(STAFF).forEach(key=>{
+    const s = STAFF[key];
+    const pill = document.createElement("div");
+    pill.className = "staff-pill" + (key===activeStaff ? " active" : "");
+    pill.innerHTML = `<div class="avatar">${s.initials}</div><div><div class="name">${s.name}</div><div class="role">${s.role}</div></div>`;
+    pill.onclick = ()=>{ activeStaff = key; renderTeamView(); };
+    row.appendChild(pill);
+  });
+}
+
+function guidanceFor(cat, name, val){
+  if(cat === "Platform"){
+    return val < 2
+      ? `No real bench depth here. Prioritize hiring for hands-on ${name} experience, or fund certification-track training now.`
+      : `Thin coverage on ${name}. Consider a bootcamp/certification push, or make it a must-have in the next EA req.`;
+  }
+  if(cat === "Tech Categoric"){
+    return val < 2
+      ? `${name} is a blind spot as a practice. Bring in a subject-matter hire or partner resource before pitching this to a client.`
+      : `${name} is inconsistent across the team. Document a practice standard and pair a strength here with a shadow.`;
+  }
+  return val < 2
+    ? `${name} is underdeveloped. Screen for it explicitly in interviews and consider coaching for current staff.`
+    : `${name} could be stronger. Worth reinforcing through mentorship or targeted coaching.`;
+}
+
+function strengthNoteFor(cat, name){
+  if(cat === "Platform") return `Safe to lead with ${name} in client conversations and pre-sales demos.`;
+  if(cat === "Tech Categoric") return `A reliable practice area for ${name} — use it to anchor proposals.`;
+  return `A real team asset for ${name} — good to feature in staffing pitches.`;
+}
+
+const RADAR_PALETTE = ["#F9615D","#6311CB","#25DA53","#FFB020","#00A3A3","#D6336C","#2F98F7","#0328D1"];
+const RADAR_COLOR_OVERRIDES = {
+  "Natasha Ness": "#F9615D",   // red
+  "Gowtami Mohanty": "#6311CB", // purple
+  "Aditya Vedula": "#25DA53"    // green
+};
+
+function renderTeamAggregate(){
+  const members = Object.values(STAFF);
+  const n = members.length;
+
+  const platformAvg = {}; PLATFORM_ITEMS.forEach(item=>{ platformAvg[item] = members.reduce((a,m)=>a+m.platform[item],0)/n; });
+  const techAvg = {}; TECH_ITEMS.forEach(item=>{ techAvg[item] = members.reduce((a,m)=>a+m.tech[item],0)/n; });
+  const bizAvg = {}; BIZ_ITEMS.forEach(item=>{ bizAvg[item.name] = members.reduce((a,m)=>a+m.biz[item.name],0)/n; });
+
+  const pAvg = avg(platformAvg), tAvg = avg(techAvg), bAvg = avg(bizAvg);
+  const teamComposite = pAvg*0.45 + tAvg*0.30 + bAvg*0.25;
+  document.getElementById("compositeScoreTeam").textContent = Math.round((teamComposite/5)*100) + "%";
+
+  const series = [{values:[pAvg,tAvg,bAvg], color:"#0328D1", dashed:true}];
+  const legendItems = [{label:"Team Average", color:"#0328D1", dashed:true}];
+  members.forEach((m,i)=>{
+    const color = RADAR_COLOR_OVERRIDES[m.name] || RADAR_PALETTE[i % RADAR_PALETTE.length];
+    series.push({values:[avg(m.platform),avg(m.tech),avg(m.biz)], color:color});
+    legendItems.push({label:m.name, color:color, dashed:false});
+  });
+  drawRadar("radarTeam", series);
+
+  const legendC = document.getElementById("radarTeamLegend");
+  if(legendC){
+    legendC.innerHTML = legendItems.map(li=>
+      `<span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--on-surface-subtle);">
+        <span style="width:14px;height:0;border-top:2px ${li.dashed?'dashed':'solid'} ${li.color};display:inline-block;"></span>${li.label}
+      </span>`
+    ).join("");
+  }
+
+  const allItems = [
+    ...PLATFORM_ITEMS.map(i=>({name:i, cat:"Platform", val:platformAvg[i]})),
+    ...TECH_ITEMS.map(i=>({name:i, cat:"Tech Categoric", val:techAvg[i]})),
+    ...BIZ_ITEMS.map(i=>({name:i.name, cat:"Business", val:bizAvg[i.name]}))
+  ];
+
+  const byGap = allItems.slice().sort((a,b)=>a.val-b.val);
+  const byStrength = allItems.slice().sort((a,b)=>b.val-a.val);
+
+  const gapsC = document.getElementById("gapsListExpanded");
+  if(gapsC){
+    gapsC.className = "score-card-grid";
+    gapsC.innerHTML = "";
+    byGap.slice(0,8).forEach(g=>{
+      const pct = Math.round((g.val/5)*100);
+      const card = document.createElement("div");
+      card.className = "score-card";
+      card.innerHTML = `
+        <div class="sc-top">
+          <div>
+            <div class="sc-cat">${g.cat}</div>
+            <div class="sc-title">${g.name}</div>
+          </div>
+          <div class="sc-score" style="color:var(--error);">${pct}%</div>
+        </div>
+        <div class="sc-bar-bg"><div class="sc-bar-fill" style="width:${pct}%; background:var(--error);"></div></div>
+        <div class="sc-desc">${guidanceFor(g.cat, g.name, g.val)}</div>`;
+      gapsC.appendChild(card);
+    });
+  }
+
+  const strengthsC = document.getElementById("strengthsListExpanded");
+  if(strengthsC){
+    strengthsC.className = "score-card-grid";
+    strengthsC.innerHTML = "";
+    byStrength.slice(0,8).forEach(g=>{
+      const pct = Math.round((g.val/5)*100);
+      const card = document.createElement("div");
+      card.className = "score-card";
+      card.innerHTML = `
+        <div class="sc-top">
+          <div>
+            <div class="sc-cat">${g.cat}</div>
+            <div class="sc-title">${g.name}</div>
+          </div>
+          <div class="sc-score" style="color:var(--success);">${pct}%</div>
+        </div>
+        <div class="sc-bar-bg"><div class="sc-bar-fill" style="width:${pct}%; background:var(--success);"></div></div>
+        <div class="sc-desc">${strengthNoteFor(g.cat, g.name)}</div>`;
+      strengthsC.appendChild(card);
+    });
+  }
+}
+
+/* ---------- ideal candidate benchmark ---------- */
+const IDEAL = {
+  platform:Object.fromEntries(PLATFORM_ITEMS.map(i=>[i,4])),
+  tech:Object.fromEntries(TECH_ITEMS.map(i=>[i,4])),
+  biz:Object.fromEntries(BIZ_ITEMS.map(i=>[i.name,4.5]))
+};
+
+function compositePercent(profile){
+  // Composite on a 0-5 basis using the same weights, expressed as 0-100.
+  const pAvg = avg(profile.platform), tAvg = avg(profile.tech), bAvg = avg(profile.biz);
+  const composite5 = pAvg*0.45 + tAvg*0.30 + bAvg*0.25;
+  return (composite5/5)*100;
+}
+
+function drawColorScale(markers){
+  // markers: [{label, pct, kind: "ideal"|"candidate"|"staff"}]
+  const w = 900, h = 120, barY = 46, barH = 20;
+  let svg = `<svg viewBox="0 0 ${w} ${h}" style="width:100%; height:auto; overflow:visible;">`;
+
+  const gradId = "scaleGrad";
+  svg += `<defs><linearGradient id="${gradId}" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="rgb(249,97,93)"/>
+    <stop offset="50%" stop-color="rgb(255,211,140)"/>
+    <stop offset="100%" stop-color="rgb(37,218,83)"/>
+  </linearGradient></defs>`;
+  svg += `<rect x="0" y="${barY}" width="${w}" height="${barH}" rx="10" fill="url(#${gradId})"/>`;
+
+  [0,25,50,75,100].forEach(t=>{
+    const x = (t/100)*w;
+    svg += `<line x1="${x}" y1="${barY+barH}" x2="${x}" y2="${barY+barH+6}" stroke="#C7C7C7" stroke-width="1"/>`;
+    svg += `<text x="${x}" y="${barY+barH+20}" font-size="11" fill="#505050" text-anchor="middle" font-family="Work Sans, sans-serif">${t}</text>`;
+  });
+
+  const sorted = markers.slice().sort((a,b)=>a.pct-b.pct);
+  sorted.forEach((m,i)=>{
+    const x = (Math.max(0,Math.min(100,m.pct))/100)*w;
+    const above = i % 2 === 0;
+    const labelY = above ? barY - 12 - (Math.floor(i/2)*14) : barY + barH + 34 + (Math.floor(i/2)*14);
+    const lineY1 = above ? labelY + 4 : barY + barH;
+    const lineY2 = above ? barY : labelY - 8;
+    const markerColor = m.kind === "ideal" ? "#1F1F1F" : (m.kind === "candidate" ? "#0328D1" : "#6311CB");
+    svg += `<line x1="${x}" y1="${lineY1}" x2="${x}" y2="${lineY2}" stroke="${markerColor}" stroke-width="1.5" stroke-dasharray="${m.kind==='ideal'?'4,3':'0'}"/>`;
+    svg += `<circle cx="${x}" cy="${barY+barH/2}" r="6" fill="${markerColor}" stroke="#fff" stroke-width="2"/>`;
+    svg += `<text x="${x}" y="${labelY}" font-size="12" font-weight="600" fill="${markerColor}" text-anchor="middle" font-family="Work Sans, sans-serif">${m.label} (${Math.round(m.pct)})</text>`;
+  });
+
+  svg += `</svg>`;
+  document.getElementById("colorScale").innerHTML = svg;
+}
+
+function toggleIdeal(){
+  document.getElementById("idealPanel").classList.toggle("open");
+}
+
+function renderIdealSliders(){
+  const c = document.getElementById("idealSliders");
+  c.innerHTML = "";
+  const h1 = document.createElement("h3"); h1.textContent = "Platform Expertise"; h1.style.cssText="font-size:13px;text-transform:uppercase;color:var(--on-surface-subtle);margin:12px 0 8px;"; c.appendChild(h1);
+  PLATFORM_ITEMS.forEach(item=> sliderRow(c, item, IDEAL.platform[item], v=>{ IDEAL.platform[item]=v; }));
+  const h2 = document.createElement("h3"); h2.textContent = "Technology Categoric Expertise"; h2.style.cssText="font-size:13px;text-transform:uppercase;color:var(--on-surface-subtle);margin:12px 0 8px;"; c.appendChild(h2);
+  TECH_ITEMS.forEach(item=> sliderRow(c, item, IDEAL.tech[item], v=>{ IDEAL.tech[item]=v; }));
+  const h3 = document.createElement("h3"); h3.textContent = "Business Expertise"; h3.style.cssText="font-size:13px;text-transform:uppercase;color:var(--on-surface-subtle);margin:12px 0 8px;"; c.appendChild(h3);
+  BIZ_ITEMS.forEach(item=> sliderRow(c, item.name, IDEAL.biz[item.name], v=>{ IDEAL.biz[item.name]=v; }));
+}
+
+/* ---------- auto-score a teammate from pasted text ---------- */
+function toggleAutoScore(){
+  const panel = document.getElementById("autoScorePanel");
+  panel.style.display = panel.style.display === "none" ? "block" : "none";
+}
+
+async function gradeTeamMember(){
+  const text = document.getElementById("teamResumeInput").value.trim();
+  const statusEl = document.getElementById("teamStatusMsg");
+  const btn = document.getElementById("teamGradeBtn");
+  if(!text){
+    statusEl.textContent = "Paste resume or profile text first.";
+    statusEl.className = "status-msg error";
+    return;
+  }
+  btn.disabled = true;
+  statusEl.className = "status-msg";
+  statusEl.textContent = "Scoring " + STAFF[activeStaff].name + "...";
+
+  const parsed = await callGradingAPI(text);
+  if(parsed){
+    const s = STAFF[activeStaff];
+    PLATFORM_ITEMS.forEach(i=>{ if(parsed.platform && parsed.platform[i]!==undefined) s.platform[i] = parsed.platform[i]; });
+    TECH_ITEMS.forEach(i=>{ if(parsed.tech && parsed.tech[i]!==undefined) s.tech[i] = parsed.tech[i]; });
+    BIZ_ITEMS.forEach(i=>{ if(parsed.biz && parsed.biz[i.name]!==undefined) s.biz[i.name] = parsed.biz[i.name]; });
+    if(parsed.industries) s.industries = parsed.industries.filter(ind=>INDUSTRIES.includes(ind));
+    renderTeamView();
+    statusEl.textContent = "Scored. Sliders updated below — adjust any that look off.";
+  }else{
+    statusEl.textContent = "Something went wrong scoring this person. Try again, or check the pasted text isn't too short.";
+    statusEl.className = "status-msg error";
+  }
+  btn.disabled = false;
+}
+
+async function callGradingAPI(text){
+  const prompt = `You are a technical recruiter grading a candidate for an Enterprise Architect, Adobe Integrated Services role.
+Score the candidate 0-5 (0 = no evidence, 5 = expert/demonstrated mastery) on each item below, based ONLY on evidence in the provided text. Do not guess beyond what's stated or reasonably implied.
+
+Platform items: ${PLATFORM_ITEMS.join(", ")}
+Technology Categoric items: ${TECH_ITEMS.join(", ")}
+Business Expertise items: ${BIZ_ITEMS.map(i=>i.name).join(", ")}
+Industries to detect (only include ones with clear evidence): ${INDUSTRIES.join(", ")}
+
+Candidate text:
+"""
+${text}
+"""
+
+Respond with ONLY valid JSON, no markdown fences, no preamble, in this exact shape:
+{
+  "platform": {"AEP":0,"AJO":0,"CJA":0,"AEM Sites":0,"AEM Assets":0,"RTCDP":0,"Marketo":0,"Firefly":0,"GenStudio":0,"Workfront":0,"AI / Custom Agents":0,"Engineering":0},
+  "tech": {"Content Management":0,"Data Management":0,"Infrastructure + Integrations":0,"Governance":0,"Platform Modernization":0,"AI Expertise":0},
+  "biz": {"Client Leadership":0,"Cross-Team Orchestration":0,"Navigating Ambiguity":0,"Solution Design":0,"Transformation":0,"Cross-GTM Expertise":0},
+  "industries": [],
+  "topStrengths": ["", "", ""],
+  "topGaps": ["", "", ""],
+  "summary": ""
+}`;
+  try{
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    const data = await response.json();
+    const textBlocks = (data.content || []).filter(b=>b.type==="text").map(b=>b.text).join("\n");
+    const clean = textBlocks.replace(/```json|```/g,"").trim();
+    return JSON.parse(clean);
+  }catch(err){
+    console.error("Grading error:", err);
+    return null;
+  }
+}
+
+/* ---------- candidate grading via Claude API ---------- */
+async function gradeCandidate(){
+  const text = document.getElementById("resumeInput").value.trim();
+  const statusEl = document.getElementById("statusMsg");
+  const btn = document.getElementById("gradeBtn");
+  if(!text){
+    statusEl.textContent = "Paste resume or profile text first.";
+    statusEl.className = "status-msg error";
+    return;
+  }
+  btn.disabled = true;
+  statusEl.className = "status-msg";
+  statusEl.textContent = "Grading candidate against the competency model...";
+
+  const parsed = await callGradingAPI(text);
+  if(parsed){
+    renderCandidateResults(parsed);
+    statusEl.textContent = "Done.";
+  }else{
+    statusEl.textContent = "Something went wrong grading this candidate. Try again, or check the pasted text isn't too short.";
+    statusEl.className = "status-msg error";
+  }
+  btn.disabled = false;
+}
+
+function compareRows(containerId, items, candidateObj, idealObj){
+  const c = document.getElementById(containerId);
+  c.innerHTML = "";
+  items.forEach(name=>{
+    const cVal = candidateObj[name] || 0;
+    const iVal = idealObj[name] || 0;
+    const row = document.createElement("div");
+    row.className = "compare-row";
+    row.innerHTML = `<div class="item">${name}</div>
+      <div class="track">
+        <div class="cand-fill" style="width:${(cVal/5*100).toFixed(0)}%"></div>
+        <div class="ideal-mark" style="left:${(iVal/5*100).toFixed(0)}%"></div>
+      </div>
+      <div class="nums">${cVal.toFixed(1)} / ${iVal.toFixed(1)}</div>`;
+    c.appendChild(row);
+  });
+}
+
+function itemMatchRatio(candVal, idealVal){
+  // How much of the ideal target this item meets, capped at 100% (exceeding the bar doesn't over-count).
+  if(idealVal <= 0) return candVal > 0 ? 1 : 0;
+  return Math.min(candVal / idealVal, 1);
+}
+
+function categoryMatchPct(candObj, idealObj, names){
+  const ratios = names.map(n => itemMatchRatio(candObj[n]||0, idealObj[n]||0));
+  return ratios.reduce((a,b)=>a+b,0) / ratios.length;
+}
+
+function renderCandidateResults(parsed){
+  document.getElementById("candidateResults").style.display = "block";
+
+  const cPlatform = parsed.platform || {};
+  const cTech = parsed.tech || {};
+  const cBiz = parsed.biz || {};
+
+  const candidatePct = compositePercent({platform:cPlatform, tech:cTech, biz:cBiz});
+  const idealPct = compositePercent(IDEAL);
+  const markers = [
+    {label:"Ideal", pct:idealPct, kind:"ideal"},
+    {label:"This Candidate", pct:candidatePct, kind:"candidate"}
+  ];
+  Object.values(STAFF).forEach(s=>{
+    markers.push({label:s.name.split(" ")[0], pct: compositePercent(s), kind:"staff"});
+  });
+  drawColorScale(markers);
+
+  const platformMatch = categoryMatchPct(cPlatform, IDEAL.platform, PLATFORM_ITEMS);
+  const techMatch = categoryMatchPct(cTech, IDEAL.tech, TECH_ITEMS);
+  const bizMatch = categoryMatchPct(cBiz, IDEAL.biz, BIZ_ITEMS.map(i=>i.name));
+  const overallMatch = platformMatch*0.45 + techMatch*0.30 + bizMatch*0.25;
+
+  document.getElementById("matchPercent").textContent = Math.round(overallMatch*100) + "%";
+  document.getElementById("matchSubline").textContent =
+    `Platform ${Math.round(platformMatch*100)}% · Tech Categoric ${Math.round(techMatch*100)}% · Business ${Math.round(bizMatch*100)}%`;
+
+  compareRows("compareplatform", PLATFORM_ITEMS, cPlatform, IDEAL.platform);
+  compareRows("comparetech", TECH_ITEMS, cTech, IDEAL.tech);
+  compareRows("comparebiz", BIZ_ITEMS.map(i=>i.name), cBiz, IDEAL.biz);
+
+  const indC = document.getElementById("candidateIndustries");
+  indC.innerHTML = "";
+  (parsed.industries || []).forEach(ind=>{
+    const tag = document.createElement("div");
+    tag.className = "tag on";
+    tag.textContent = ind;
+    indC.appendChild(tag);
+  });
+  if((parsed.industries||[]).length===0){
+    indC.innerHTML = `<span style="font-size:13px;color:var(--on-surface-subtle);">No clear industry evidence detected.</span>`;
+  }
+
+  const sList = document.getElementById("strengthsList"); sList.innerHTML = "";
+  (parsed.topStrengths||[]).forEach(s=>{ if(s){ const li=document.createElement("li"); li.textContent=s; sList.appendChild(li);} });
+
+  const gList = document.getElementById("gapsCandidateList"); gList.innerHTML = "";
+  (parsed.topGaps||[]).forEach(g=>{ if(g){ const li=document.createElement("li"); li.textContent=g; gList.appendChild(li);} });
+
+  document.getElementById("candidateSummary").textContent = parsed.summary || "";
+}
+
+/* ---------- init ---------- */
+document.getElementById("buildTag").textContent = "Updated " + new Date().toLocaleDateString("en-US", {year:"numeric", month:"short", day:"numeric"});
+renderTeamView();
+renderIdealSliders();
+</script>
+</body>
+</html>
