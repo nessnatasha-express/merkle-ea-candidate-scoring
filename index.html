@@ -43,8 +43,8 @@
   body{margin:0; font-family:'Work Sans', sans-serif; background:var(--surface-body); color:var(--on-surface);}
   .wrap{max-width:1080px; margin:0 auto; padding:32px 24px 64px;}
 
-  header.hero{display:flex; flex-direction:column; gap:6px; padding:24px 0 20px; border-bottom:1px solid var(--border-subtle); margin-bottom:20px;}
-  .topbar{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:14px;}
+  header.hero{padding:24px 0 20px; border-bottom:1px solid var(--border-subtle); margin-bottom:20px; position:sticky; top:0; z-index:50; background:var(--surface-body);}
+  .topbar{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
   .topbar-right{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
   .build-tag{
     font-size:11px; font-weight:600; color:var(--on-surface-subtle);
@@ -53,6 +53,17 @@
   }
   .eyebrow{font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--primary-brand);}
   .tabs{display:flex; gap:8px;}
+
+  .page-hero{padding:6px 0 8px; margin-bottom:8px;}
+  .page-hero .eyebrow{display:block; margin-bottom:8px;}
+  .page-hero h1{font-size:32px; font-weight:700; letter-spacing:-0.02em; margin:0 0 10px;}
+  .page-hero p{font-size:15px; line-height:1.7; color:var(--on-surface-subtle); max-width:780px; margin:0;}
+
+  .action-note{
+    margin-top:16px; padding:12px 16px; border-radius:var(--radius);
+    background:var(--primary-container); color:var(--primary-on-container);
+    font-size:13px; line-height:1.6;
+  }
   h1{font-size:40px; font-weight:700; letter-spacing:-0.02em; margin:2px 0 0;}
   .sub{font-size:15px; color:var(--on-surface-subtle); max-width:640px;}
 
@@ -196,27 +207,26 @@
         <span class="build-tag" id="buildTag"></span>
         <div class="tabs">
           <button class="tab-btn active" data-tab="start">Start Here</button>
-          <button class="tab-btn" data-tab="team">Team DNA</button>
+          <button class="tab-btn" data-tab="team">Staff Scores</button>
           <button class="tab-btn" data-tab="candidate">Candidate Review</button>
-          <button class="tab-btn" data-tab="wins">Wins &amp; Gaps</button>
+          <button class="tab-btn" data-tab="wins">Team DNA</button>
         </div>
       </div>
     </div>
-    <h1>DNA of Enterprise Architects</h1>
-    <p class="sub">The current team's aggregate strengths and gaps, a candidate scoring tool for resume or profile review, and a rollup of where to invest next.</p>
   </header>
 
   <!-- ===================== START HERE VIEW ===================== -->
   <div class="view active" id="view-start">
 
-    <div class="card">
-      <span class="eyebrow" style="display:block; margin-bottom:8px;">Why This Framework Exists</span>
-      <h2 style="font-size:26px; margin-bottom:10px;">What makes a great Enterprise Architect here</h2>
-      <p style="font-size:15px; line-height:1.7; color:var(--on-surface-subtle); max-width:760px;">
-        An EA at Adobe Integrated Services has to move fluidly between deep Adobe platform knowledge and the
-        judgment to lead a client through ambiguity, a boardroom, and a delivery pod all in the same week. No single
-        person walks in with all of it. This page breaks down the competencies we score against, why each one earns
-        its weight, and what "good enough to hire" actually looks like versus "fully grown."
+    <div class="page-hero">
+      <span class="eyebrow">DNA of an EA</span>
+      <h1>What makes a great Enterprise Architect here</h1>
+      <p>
+        As an Enterprise Architect at Merkle, working within the Adobe Integrated Services group, you have to move
+        fluidly between deep Adobe platform knowledge and the judgment to lead a client through ambiguity, a
+        boardroom, and a delivery pod, all in the same week. No single person walks in with all of it. This page
+        breaks down the competencies we score against, why each one earns its weight, and what "good enough to
+        hire" actually looks like versus "fully grown."
       </p>
     </div>
 
@@ -225,15 +235,15 @@
       <p class="note" style="margin-top:0;">Every score on this site (staff, candidates, team) is built from these three weighted categories. Industry Expertise is tracked but not scored &mdash; more on that below.</p>
 
       <div class="weight-stack">
-        <div class="weight-seg" style="width:45%; background:var(--primary-brand);">Platform Expertise · 45%</div>
+        <div class="weight-seg" style="width:40%; background:var(--primary-brand);">Platform Expertise · 40%</div>
         <div class="weight-seg" style="width:30%; background:var(--secondary-brand);">Tech Categoric · 30%</div>
-        <div class="weight-seg" style="width:25%; background:var(--tertiary-brand);">Business · 25%</div>
+        <div class="weight-seg" style="width:30%; background:var(--tertiary-brand);">Business · 30%</div>
       </div>
 
       <div class="start-cat-grid">
         <div class="start-cat-card">
           <div class="start-cat-head" style="border-top:4px solid var(--primary-brand);">
-            <span class="weight-tag w-platform">45%</span>
+            <span class="weight-tag w-platform">40%</span>
             <h3>Platform Expertise</h3>
           </div>
           <p>Hands-on depth across the specific Adobe tools clients are actually paying us to run. This carries the
@@ -254,7 +264,7 @@
 
         <div class="start-cat-card">
           <div class="start-cat-head" style="border-top:4px solid var(--tertiary-brand);">
-            <span class="weight-tag w-biz">25%</span>
+            <span class="weight-tag w-biz">30%</span>
             <h3>Business Expertise</h3>
           </div>
           <p>The human and organizational skill that makes the technical work land: leading executives, holding a
@@ -289,12 +299,27 @@
       </p>
 
       <div id="scoreBandScale" style="margin-top:20px;"></div>
+
+      <div class="action-note">
+        <b>What to do with a score:</b> anyone scoring above 50% can be sent to Natasha for a resume review and screen.
+        Anyone scoring above 75% can go ahead and be scheduled directly for an interview with Natasha.
+      </div>
     </div>
 
   </div>
 
   <!-- ===================== TEAM VIEW ===================== -->
   <div class="view" id="view-team">
+
+    <div class="page-hero">
+      <span class="eyebrow">Active Staff Scores</span>
+      <h1>How does our current staff of EAs score against the competencies?</h1>
+      <p>
+        Select any individual member of the EA team below to see how they score across each competency area. Some
+        team members score highly in one area while others don't, and that's by design: the goal is for the team to
+        cover each other's bases while we continue growing these skills across this highly sought-after group.
+      </p>
+    </div>
 
     <div class="staff-row" id="staffRow"></div>
     <div class="add-form" style="margin-bottom:24px;">
@@ -327,14 +352,14 @@
       </div>
 
       <div class="card">
-        <h2>Platform Expertise <span class="weight-tag w-platform">45%</span></h2>
+        <h2>Platform Expertise <span class="weight-tag w-platform">40%</span></h2>
         <div id="platformSliders"></div>
         <div class="subsection">
           <h3>Technology Categoric Expertise <span class="weight-tag w-tech" style="text-transform:none;">30%</span></h3>
           <div id="techSliders"></div>
         </div>
         <div class="subsection">
-          <h3>Business Expertise <span class="weight-tag w-biz" style="text-transform:none;">25%</span></h3>
+          <h3>Business Expertise <span class="weight-tag w-biz" style="text-transform:none;">30%</span></h3>
           <div id="bizComp"></div>
         </div>
       </div>
@@ -344,9 +369,18 @@
   <!-- ===================== CANDIDATE VIEW ===================== -->
   <div class="view" id="view-candidate">
 
+    <div class="page-hero">
+      <span class="eyebrow">Recruiting Tool</span>
+      <h1>Score a New Candidate</h1>
+      <p>
+        Paste a resume or LinkedIn profile text below. Copy and paste the profile content directly, since this tool
+        <b>cannot</b> fetch LinkedIn URLs live due to their anti-scraping restrictions. Claude will grade it against
+        the same competency model used for the team.
+      </p>
+    </div>
+
     <div class="card">
-      <h2>Score a Candidate</h2>
-      <p class="note" style="margin-top:0;">Paste a resume or LinkedIn profile text below (copy/paste the profile content directly &mdash; this tool cannot fetch LinkedIn URLs live due to their anti-scraping restrictions). Claude will grade it against the same competency model used for the team.</p>
+      <h2>Paste Candidate Profile</h2>
       <textarea id="resumeInput" placeholder="Paste resume text or LinkedIn profile content here..."></textarea>
       <br>
       <button class="grade-btn" id="gradeBtn" onclick="gradeCandidate()">Grade Candidate</button>
@@ -374,6 +408,10 @@
       <div class="subsection" id="sec-scale" style="scroll-margin-top:16px;">
         <h3>Where Everyone Lands (0&ndash;100)</h3>
         <div id="colorScale" style="margin-top:10px;"></div>
+        <div class="action-note">
+          <b>What to do with this score:</b> above 50%, send this candidate to Natasha for a resume review and
+          screen. Above 75%, go ahead and schedule them directly for an interview with Natasha.
+        </div>
       </div>
 
       <div class="legend" style="margin-top:20px;">
@@ -421,9 +459,18 @@
   <!-- ===================== WINS & GAPS VIEW ===================== -->
   <div class="view" id="view-wins">
 
+    <div class="page-hero">
+      <span class="eyebrow">Team Composite</span>
+      <h1>See an aggregate score of our holistic EA team</h1>
+      <p>
+        This grading rolls up every current teammate's scores from Staff Scores into one view: where the bench is
+        strong, where it's thin, and what that means for staffing versus training decisions.
+      </p>
+    </div>
+
     <div class="card">
-      <h2>Team Composite</h2>
-      <p class="note" style="margin-top:0;">Average across every teammate in Team DNA, computed live as ratings change there.</p>
+      <h2>Radar Overview</h2>
+      <p class="note" style="margin-top:0;">Each teammate plotted individually, against the team average, computed live as ratings change on Staff Scores.</p>
       <div class="grid">
         <div style="text-align:center;">
           <svg class="radar" id="radarTeam" width="260" height="260" viewBox="0 0 260 260"></svg>
@@ -539,7 +586,7 @@ function avg(obj){
   return vals.reduce((a,b)=>a+b,0) / vals.length;
 }
 function compositeOf(profile){
-  return avg(profile.platform)*0.45 + avg(profile.tech)*0.30 + avg(profile.biz)*0.25;
+  return avg(profile.platform)*0.40 + avg(profile.tech)*0.30 + avg(profile.biz)*0.30;
 }
 
 function sliderRow(container, label, value, onChange){
@@ -682,7 +729,7 @@ function renderTeamAggregate(){
   const bizAvg = {}; BIZ_ITEMS.forEach(item=>{ bizAvg[item.name] = members.reduce((a,m)=>a+m.biz[item.name],0)/n; });
 
   const pAvg = avg(platformAvg), tAvg = avg(techAvg), bAvg = avg(bizAvg);
-  const teamComposite = pAvg*0.45 + tAvg*0.30 + bAvg*0.25;
+  const teamComposite = pAvg*0.40 + tAvg*0.30 + bAvg*0.30;
   document.getElementById("compositeScoreTeam").textContent = Math.round((teamComposite/5)*100) + "%";
 
   const series = [{values:[pAvg,tAvg,bAvg], color:"#0328D1", dashed:true}];
@@ -767,7 +814,7 @@ const IDEAL = {
 function compositePercent(profile){
   // Composite on a 0-5 basis using the same weights, expressed as 0-100.
   const pAvg = avg(profile.platform), tAvg = avg(profile.tech), bAvg = avg(profile.biz);
-  const composite5 = pAvg*0.45 + tAvg*0.30 + bAvg*0.25;
+  const composite5 = pAvg*0.40 + tAvg*0.30 + bAvg*0.30;
   return (composite5/5)*100;
 }
 
@@ -976,7 +1023,7 @@ function renderCandidateResults(parsed){
   const platformMatch = categoryMatchPct(cPlatform, IDEAL.platform, PLATFORM_ITEMS);
   const techMatch = categoryMatchPct(cTech, IDEAL.tech, TECH_ITEMS);
   const bizMatch = categoryMatchPct(cBiz, IDEAL.biz, BIZ_ITEMS.map(i=>i.name));
-  const overallMatch = platformMatch*0.45 + techMatch*0.30 + bizMatch*0.25;
+  const overallMatch = platformMatch*0.40 + techMatch*0.30 + bizMatch*0.30;
 
   document.getElementById("matchPercent").textContent = Math.round(overallMatch*100) + "%";
   document.getElementById("matchSubline").textContent =
@@ -1073,7 +1120,7 @@ function drawScoreBandScale(){
 }
 
 /* ---------- init ---------- */
-document.getElementById("buildTag").textContent = "Updated " + new Date().toLocaleDateString("en-US", {year:"numeric", month:"short", day:"numeric"});
+document.getElementById("buildTag").textContent = "Updated " + new Date().toLocaleDateString("en-US", {year:"2-digit", month:"2-digit", day:"2-digit"});
 renderStartHere();
 renderTeamView();
 renderIdealSliders();
