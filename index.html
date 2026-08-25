@@ -19,6 +19,7 @@
     --tertiary-brand:#6311CB;
     --tertiary-container:#EFECFF;
     --tertiary-on-container:#240D4D;
+    --merkle-red:#F9615D;
     --on-surface:#1F1F1F;
     --on-surface-subtle:#505050;
     --surface-body:#FCFCFC;
@@ -64,6 +65,26 @@
     background:var(--primary-container); color:var(--primary-on-container);
     font-size:13px; line-height:1.6;
   }
+
+  .cat-summary-row{display:flex; gap:10px; margin-bottom:20px;}
+  .cat-summary-item{
+    flex:1; text-align:center; padding:12px 8px; border-radius:var(--radius);
+    background:var(--surface-container-low); cursor:pointer; border:2px solid transparent;
+  }
+  .cat-summary-item.active{border-color:var(--primary-brand);}
+  .cat-summary-item .cs-label{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color:var(--on-surface-subtle);}
+  .cat-summary-item .cs-pct{font-family:'Geist Mono', monospace; font-size:22px; font-weight:600; margin-top:4px;}
+
+  .cat-carousel-header{display:grid; grid-template-columns:36px 1fr 36px; align-items:center; gap:12px; margin-bottom:16px;}
+  .cat-carousel-header h2{font-size:20px; font-weight:700; text-align:center; grid-column:2;}
+  .cat-arrow{
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--border-medium);
+    background:var(--surface-body); font-size:16px; cursor:pointer; color:var(--on-surface);
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .cat-arrow:first-child{grid-column:1;}
+  .cat-arrow:last-child{grid-column:3;}
+  .cat-arrow:hover{background:var(--surface-container-low);}
   h1{font-size:40px; font-weight:700; letter-spacing:-0.02em; margin:2px 0 0;}
   .sub{font-size:15px; color:var(--on-surface-subtle); max-width:640px;}
 
@@ -152,9 +173,20 @@
   .start-cat-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:16px;}
   @media(max-width:760px){.start-cat-grid{grid-template-columns:1fr;}}
   .start-cat-card{background:var(--surface-container-low); border-radius:var(--radius); padding:18px; display:flex; flex-direction:column; gap:10px;}
-  .start-cat-head{display:flex; flex-direction:column; gap:6px; padding-top:10px;}
+  .start-cat-head{display:flex; flex-direction:column; gap:6px;}
   .start-cat-head h3{font-size:17px; margin:0;}
   .start-cat-card p{font-size:13px; line-height:1.6; color:var(--on-surface-subtle); margin:0;}
+
+  .sh-badge{display:inline-block; width:fit-content; font-size:12px; font-weight:700; letter-spacing:0.02em; padding:4px 12px; border-radius:var(--radius-full); color:#fff;}
+  .sh-badge-platform{background:var(--primary-brand);}
+  .sh-badge-tech{background:var(--merkle-red);}
+  .sh-badge-biz{background:var(--tertiary-brand);}
+  .sh-badge-industry{background:#3A3A3A; color:#fff;}
+
+  .cat-platform .tags .tag{border-color:var(--primary-brand); color:var(--primary-brand);}
+  .cat-tech .tags .tag{border-color:var(--merkle-red); color:var(--merkle-red);}
+  .cat-biz .tags .tag{border-color:var(--tertiary-brand); color:var(--tertiary-brand);}
+  .cat-industry .tags .tag{border-color:#3A3A3A; color:#3A3A3A;}
 
   /* candidate review */
   textarea#resumeInput{
@@ -236,14 +268,14 @@
 
       <div class="weight-stack">
         <div class="weight-seg" style="width:40%; background:var(--primary-brand);">Platform Expertise · 40%</div>
-        <div class="weight-seg" style="width:30%; background:var(--secondary-brand);">Tech Categoric · 30%</div>
+        <div class="weight-seg" style="width:30%; background:var(--merkle-red);">Tech Categoric · 30%</div>
         <div class="weight-seg" style="width:30%; background:var(--tertiary-brand);">Business · 30%</div>
       </div>
 
       <div class="start-cat-grid">
-        <div class="start-cat-card">
-          <div class="start-cat-head" style="border-top:4px solid var(--primary-brand);">
-            <span class="weight-tag w-platform">40%</span>
+        <div class="start-cat-card cat-platform">
+          <div class="start-cat-head">
+            <span class="sh-badge sh-badge-platform">40%</span>
             <h3>Platform Expertise</h3>
           </div>
           <p>Hands-on depth across the specific Adobe tools clients are actually paying us to run. This carries the
@@ -252,9 +284,9 @@
           <div class="tags" id="startPlatformTags"></div>
         </div>
 
-        <div class="start-cat-card">
-          <div class="start-cat-head" style="border-top:4px solid var(--secondary-brand);">
-            <span class="weight-tag w-tech">30%</span>
+        <div class="start-cat-card cat-tech">
+          <div class="start-cat-head">
+            <span class="sh-badge sh-badge-tech">30%</span>
             <h3>Technology Categoric Expertise</h3>
           </div>
           <p>The connective tissue between tools &mdash; content, data, integrations, governance, modernization, and
@@ -262,9 +294,9 @@
           <div class="tags" id="startTechTags"></div>
         </div>
 
-        <div class="start-cat-card">
-          <div class="start-cat-head" style="border-top:4px solid var(--tertiary-brand);">
-            <span class="weight-tag w-biz">30%</span>
+        <div class="start-cat-card cat-biz">
+          <div class="start-cat-head">
+            <span class="sh-badge sh-badge-biz">30%</span>
             <h3>Business Expertise</h3>
           </div>
           <p>The human and organizational skill that makes the technical work land: leading executives, holding a
@@ -272,9 +304,9 @@
           <div class="tags" id="startBizTags"></div>
         </div>
 
-        <div class="start-cat-card">
-          <div class="start-cat-head" style="border-top:4px solid var(--on-surface-subtle);">
-            <span class="weight-tag" style="background:var(--surface-container-mid); color:var(--on-surface-subtle);">tag only</span>
+        <div class="start-cat-card cat-industry">
+          <div class="start-cat-head">
+            <span class="sh-badge sh-badge-industry">tag only</span>
             <h3>Industry Expertise</h3>
           </div>
           <p>Not scored, because depth in one industry doesn't make someone a better or worse architect &mdash; it
@@ -340,6 +372,10 @@
           <div class="tags" id="industryTags"></div>
         </div>
         <div class="subsection">
+          <h3>GTM Model Expertise <span style="font-weight:400; text-transform:none;">(tag only, not scored)</span></h3>
+          <div class="tags" id="gtmModelTags"></div>
+        </div>
+        <div class="subsection">
           <span class="ideal-toggle" onclick="toggleAutoScore()">Auto-score from resume / LinkedIn text</span>
           <div id="autoScorePanel" style="display:none;">
             <p class="note" style="margin-top:0;">Paste this person's resume or LinkedIn profile text (About, Experience, Skills sections). Claude will score them and overwrite their sliders below. This replaces manually dragging every slider yourself.</p>
@@ -352,16 +388,15 @@
       </div>
 
       <div class="card">
-        <h2>Platform Expertise <span class="weight-tag w-platform">40%</span></h2>
-        <div id="platformSliders"></div>
-        <div class="subsection">
-          <h3>Technology Categoric Expertise <span class="weight-tag w-tech" style="text-transform:none;">30%</span></h3>
-          <div id="techSliders"></div>
+        <div class="cat-summary-row" id="catSummaryRow"></div>
+
+        <div class="cat-carousel-header">
+          <button class="cat-arrow" onclick="shiftCategory(-1)" aria-label="Previous category">&larr;</button>
+          <h2 id="catCarouselTitle" style="margin:0;"></h2>
+          <button class="cat-arrow" onclick="shiftCategory(1)" aria-label="Next category">&rarr;</button>
         </div>
-        <div class="subsection">
-          <h3>Business Expertise <span class="weight-tag w-biz" style="text-transform:none;">30%</span></h3>
-          <div id="bizComp"></div>
-        </div>
+
+        <div id="catCarouselBody"></div>
       </div>
     </div>
   </div>
@@ -434,6 +469,8 @@
       <div class="subsection" id="sec-industries" style="scroll-margin-top:16px;">
         <h3>Industries Detected</h3>
         <div class="tags" id="candidateIndustries"></div>
+        <h3 style="margin-top:16px;">GTM Model Detected</h3>
+        <div class="tags" id="candidateGtmModels"></div>
       </div>
 
       <div class="subsection" id="sec-strengths" style="scroll-margin-top:16px;">
@@ -511,45 +548,50 @@
 </div>
 
 <script>
-const PLATFORM_ITEMS = ["AEP","AJO","CJA","AEM Sites","AEM Assets","RTCDP","Marketo","Firefly","GenStudio","Workfront","AI / Custom Agents","Engineering"];
+const PLATFORM_ITEMS = ["AEP","AJO","CJA","AEM Sites","AEM Assets","RTCDP","Marketo","Firefly","GenStudio","Workfront","Adobe Launch/Tagging","AI / Custom Agents","Engineering"];
 const TECH_ITEMS = ["Content Management","Data Management","Infrastructure + Integrations","Governance","Platform Modernization","AI Expertise"];
 const BIZ_ITEMS = [
   {name:"Client Leadership", activities:"Executive readouts, stakeholder alignment", deliverables:"Business case narratives, trusted advisor relationships"},
-  {name:"Cross-Team Orchestration", activities:"Pod coordination, delivery team alignment", deliverables:"On-track engagements, minimal friction handoffs"},
+  {name:"Team Orchestration", activities:"Pod coordination, delivery team alignment", deliverables:"On-track engagements, minimal friction handoffs"},
   {name:"Navigating Ambiguity", activities:"Adapting scope mid-engagement", deliverables:"Revised plans under shifting constraints"},
   {name:"Solution Design", activities:"Requirements translation, architecture sequencing, roadmap ownership", deliverables:"Solution designs, 12-month activation roadmap"},
   {name:"Transformation", activities:"Change management, org readiness", deliverables:"Transformation roadmaps"},
   {name:"Cross-GTM Expertise", activities:"Aligning pre-sales, delivery, account teams", deliverables:"Coordinated go-to-market motion"}
 ];
 const INDUSTRIES = ["Finance","QSR","Healthcare","SaaS","Manufacturing","Pharmaceutical","Technology","Other"];
+const GTM_MODELS = ["B2B","B2B2C","D2C","B2C","Channel-Led","Product-Led"];
 
 function blankProfile(){
   return {
     platform:Object.fromEntries(PLATFORM_ITEMS.map(i=>[i,0])),
     tech:Object.fromEntries(TECH_ITEMS.map(i=>[i,0])),
     biz:Object.fromEntries(BIZ_ITEMS.map(i=>[i.name,0])),
-    industries:[]
+    industries:[],
+    gtmModels:[]
   };
 }
 
 const STAFF = {
   "natasha": Object.assign({name:"Natasha Ness", role:"Enterprise Architect", initials:"NN"}, {
-    platform:{"AEP":5,"AJO":4,"CJA":3,"AEM Sites":2,"AEM Assets":4,"RTCDP":5,"Marketo":5,"Firefly":5,"GenStudio":5,"Workfront":5,"AI / Custom Agents":5,"Engineering":4},
-    tech:{"Content Management":5,"Data Management":4,"Infrastructure + Integrations":4,"Governance":4,"Platform Modernization":4,"AI Expertise":5},
-    biz:{"Client Leadership":5,"Cross-Team Orchestration":5,"Navigating Ambiguity":5,"Solution Design":5,"Transformation":5,"Cross-GTM Expertise":5},
-    industries:["Healthcare","Pharmaceutical","Finance","Technology","SaaS","Manufacturing","QSR"]
+    platform:{"AEP":3,"AJO":4,"CJA":3,"AEM Sites":2,"AEM Assets":3,"RTCDP":5,"Marketo":5,"Firefly":5,"GenStudio":5,"Workfront":5,"Adobe Launch/Tagging":2,"AI / Custom Agents":5,"Engineering":3},
+    tech:{"Content Management":5,"Data Management":4,"Infrastructure + Integrations":4,"Governance":4,"Platform Modernization":5,"AI Expertise":5},
+    biz:{"Client Leadership":5,"Team Orchestration":5,"Navigating Ambiguity":5,"Solution Design":5,"Transformation":5,"Cross-GTM Expertise":5},
+    industries:["Healthcare","Pharmaceutical","Finance","Technology","SaaS","Manufacturing","QSR"],
+    gtmModels:["B2B","D2C","Channel-Led","Product-Led"]
   }),
   "aditya": Object.assign({name:"Aditya Vedula", role:"Enterprise Architect", initials:"AV"}, {
-    platform:{"AEP":3,"AJO":0,"CJA":0,"AEM Sites":5,"AEM Assets":5,"RTCDP":3,"Marketo":0,"Firefly":0,"GenStudio":0,"Workfront":4,"AI / Custom Agents":5,"Engineering":5},
+    platform:{"AEP":3,"AJO":0,"CJA":0,"AEM Sites":5,"AEM Assets":5,"RTCDP":3,"Marketo":0,"Firefly":0,"GenStudio":0,"Workfront":4,"Adobe Launch/Tagging":3,"AI / Custom Agents":5,"Engineering":5},
     tech:{"Content Management":5,"Data Management":5,"Infrastructure + Integrations":5,"Governance":4,"Platform Modernization":5,"AI Expertise":5},
-    biz:{"Client Leadership":5,"Cross-Team Orchestration":5,"Navigating Ambiguity":4,"Solution Design":5,"Transformation":5,"Cross-GTM Expertise":5},
-    industries:["Finance","Manufacturing","Technology","Other"]
+    biz:{"Client Leadership":5,"Team Orchestration":5,"Navigating Ambiguity":4,"Solution Design":5,"Transformation":5,"Cross-GTM Expertise":5},
+    industries:["Finance","Manufacturing","Technology","Other"],
+    gtmModels:["B2B"]
   }),
   "gowtami": Object.assign({name:"Gowtami Mohanty", role:"Enterprise Architect", initials:"GM"}, {
-    platform:{"AEP":5,"AJO":5,"CJA":4,"AEM Sites":1,"AEM Assets":1,"RTCDP":5,"Marketo":4,"Firefly":0,"GenStudio":0,"Workfront":1,"AI / Custom Agents":5,"Engineering":2},
+    platform:{"AEP":5,"AJO":5,"CJA":4,"AEM Sites":1,"AEM Assets":1,"RTCDP":5,"Marketo":4,"Firefly":0,"GenStudio":0,"Workfront":1,"Adobe Launch/Tagging":4,"AI / Custom Agents":5,"Engineering":2},
     tech:{"Content Management":1,"Data Management":5,"Infrastructure + Integrations":4,"Governance":1,"Platform Modernization":4,"AI Expertise":5},
-    biz:{"Client Leadership":4,"Cross-Team Orchestration":5,"Navigating Ambiguity":3,"Solution Design":4,"Transformation":5,"Cross-GTM Expertise":2},
-    industries:["Healthcare","Finance","Technology"]
+    biz:{"Client Leadership":4,"Team Orchestration":5,"Navigating Ambiguity":3,"Solution Design":4,"Transformation":5,"Cross-GTM Expertise":2},
+    industries:["Healthcare","Finance","Technology"],
+    gtmModels:["B2B","B2C"]
   })
 };
 let activeStaff = "natasha";
@@ -639,25 +681,68 @@ function drawRadar(elId, series){
 }
 
 /* ---------- team view rendering ---------- */
+const CATEGORIES = [
+  {key:"platform", label:"Platform Expertise", weightClass:"w-platform", weightPct:"40%"},
+  {key:"tech", label:"Technology Categoric Expertise", weightClass:"w-tech", weightPct:"30%"},
+  {key:"biz", label:"Business Expertise", weightClass:"w-biz", weightPct:"30%"}
+];
+let activeCategoryIndex = 0;
+
+function shiftCategory(delta){
+  activeCategoryIndex = (activeCategoryIndex + delta + CATEGORIES.length) % CATEGORIES.length;
+  renderCategoryCarousel();
+}
+
+function renderCategoryCarousel(){
+  const s = STAFF[activeStaff];
+  const cat = CATEGORIES[activeCategoryIndex];
+
+  document.getElementById("catCarouselTitle").innerHTML =
+    `${cat.label} <span class="weight-tag ${cat.weightClass}" style="text-transform:none;">${cat.weightPct}</span>`;
+
+  const body = document.getElementById("catCarouselBody");
+  body.innerHTML = "";
+  if(cat.key === "platform"){
+    PLATFORM_ITEMS.forEach(item=> sliderRow(body, item, s.platform[item], v=>{ s.platform[item]=v; renderCategorySummary(); }));
+  } else if(cat.key === "tech"){
+    TECH_ITEMS.forEach(item=> sliderRow(body, item, s.tech[item], v=>{ s.tech[item]=v; renderCategorySummary(); }));
+  } else {
+    BIZ_ITEMS.forEach(item=>{
+      const wrap = document.createElement("div");
+      wrap.className = "biz-comp";
+      wrap.innerHTML = `<div class="name">${item.name}</div><div class="meta"><b>Activities:</b> ${item.activities}<br><b>Deliverables:</b> ${item.deliverables}</div>`;
+      sliderRow(wrap, "", s.biz[item.name], v=>{ s.biz[item.name]=v; renderCategorySummary(); });
+      body.appendChild(wrap);
+    });
+  }
+
+  renderCategorySummary();
+}
+
+function renderCategorySummary(){
+  const s = STAFF[activeStaff];
+  const pcts = {
+    platform: Math.round((avg(s.platform)/5)*100),
+    tech: Math.round((avg(s.tech)/5)*100),
+    biz: Math.round((avg(s.biz)/5)*100)
+  };
+  const row = document.getElementById("catSummaryRow");
+  row.innerHTML = "";
+  CATEGORIES.forEach((cat, i)=>{
+    const item = document.createElement("div");
+    item.className = "cat-summary-item" + (i === activeCategoryIndex ? " active" : "");
+    item.innerHTML = `<div class="cs-label">${cat.label}</div><div class="cs-pct">${pcts[cat.key]}%</div>`;
+    item.onclick = ()=>{ activeCategoryIndex = i; renderCategoryCarousel(); };
+    row.appendChild(item);
+  });
+}
+
 function renderTeamView(skipStaffRow){
   if(!skipStaffRow) renderStaffRow();
   const s = STAFF[activeStaff];
   document.getElementById("individualLabel").textContent = s.name + "'s Score";
 
-  const pc = document.getElementById("platformSliders"); pc.innerHTML = "";
-  PLATFORM_ITEMS.forEach(item=> sliderRow(pc, item, s.platform[item], v=>{ s.platform[item]=v; }));
-
-  const tc = document.getElementById("techSliders"); tc.innerHTML = "";
-  TECH_ITEMS.forEach(item=> sliderRow(tc, item, s.tech[item], v=>{ s.tech[item]=v; }));
-
-  const bc = document.getElementById("bizComp"); bc.innerHTML = "";
-  BIZ_ITEMS.forEach(item=>{
-    const wrap = document.createElement("div");
-    wrap.className = "biz-comp";
-    wrap.innerHTML = `<div class="name">${item.name}</div><div class="meta"><b>Activities:</b> ${item.activities}<br><b>Deliverables:</b> ${item.deliverables}</div>`;
-    sliderRow(wrap, "Rating", s.biz[item.name], v=>{ s.biz[item.name]=v; });
-    bc.appendChild(wrap);
-  });
+  renderCategoryCarousel();
 
   const tagsC = document.getElementById("industryTags"); tagsC.innerHTML = "";
   INDUSTRIES.forEach(ind=>{
@@ -670,6 +755,20 @@ function renderTeamView(skipStaffRow){
       renderTeamView(true);
     };
     tagsC.appendChild(tag);
+  });
+
+  const gtmC = document.getElementById("gtmModelTags"); gtmC.innerHTML = "";
+  if(!s.gtmModels) s.gtmModels = [];
+  GTM_MODELS.forEach(model=>{
+    const tag = document.createElement("div");
+    tag.className = "tag" + (s.gtmModels.includes(model) ? " on" : "");
+    tag.textContent = model;
+    tag.onclick = ()=>{
+      if(s.gtmModels.includes(model)) s.gtmModels = s.gtmModels.filter(i=>i!==model);
+      else s.gtmModels.push(model);
+      renderTeamView(true);
+    };
+    gtmC.appendChild(tag);
   });
 
   document.getElementById("compositeScoreIndividual").textContent = Math.round(compositePercent(s)) + "%";
@@ -895,6 +994,7 @@ async function gradeTeamMember(){
     TECH_ITEMS.forEach(i=>{ if(parsed.tech && parsed.tech[i]!==undefined) s.tech[i] = parsed.tech[i]; });
     BIZ_ITEMS.forEach(i=>{ if(parsed.biz && parsed.biz[i.name]!==undefined) s.biz[i.name] = parsed.biz[i.name]; });
     if(parsed.industries) s.industries = parsed.industries.filter(ind=>INDUSTRIES.includes(ind));
+    if(parsed.gtmModels) s.gtmModels = parsed.gtmModels.filter(m=>GTM_MODELS.includes(m));
     renderTeamView();
     statusEl.textContent = "Scored. Sliders updated below — adjust any that look off.";
   }else{
@@ -912,6 +1012,7 @@ Platform items: ${PLATFORM_ITEMS.join(", ")}
 Technology Categoric items: ${TECH_ITEMS.join(", ")}
 Business Expertise items: ${BIZ_ITEMS.map(i=>i.name).join(", ")}
 Industries to detect (only include ones with clear evidence): ${INDUSTRIES.join(", ")}
+GTM/business models to detect (only include ones with clear evidence): ${GTM_MODELS.join(", ")}
 
 Candidate text:
 """
@@ -920,10 +1021,11 @@ ${text}
 
 Respond with ONLY valid JSON, no markdown fences, no preamble, in this exact shape:
 {
-  "platform": {"AEP":0,"AJO":0,"CJA":0,"AEM Sites":0,"AEM Assets":0,"RTCDP":0,"Marketo":0,"Firefly":0,"GenStudio":0,"Workfront":0,"AI / Custom Agents":0,"Engineering":0},
+  "platform": {"AEP":0,"AJO":0,"CJA":0,"AEM Sites":0,"AEM Assets":0,"RTCDP":0,"Marketo":0,"Firefly":0,"GenStudio":0,"Workfront":0,"Adobe Launch/Tagging":0,"AI / Custom Agents":0,"Engineering":0},
   "tech": {"Content Management":0,"Data Management":0,"Infrastructure + Integrations":0,"Governance":0,"Platform Modernization":0,"AI Expertise":0},
-  "biz": {"Client Leadership":0,"Cross-Team Orchestration":0,"Navigating Ambiguity":0,"Solution Design":0,"Transformation":0,"Cross-GTM Expertise":0},
+  "biz": {"Client Leadership":0,"Team Orchestration":0,"Navigating Ambiguity":0,"Solution Design":0,"Transformation":0,"Cross-GTM Expertise":0},
   "industries": [],
+  "gtmModels": [],
   "topStrengths": ["", "", ""],
   "topGaps": ["", "", ""],
   "summary": ""
@@ -1043,6 +1145,18 @@ function renderCandidateResults(parsed){
   });
   if((parsed.industries||[]).length===0){
     indC.innerHTML = `<span style="font-size:13px;color:var(--on-surface-subtle);">No clear industry evidence detected.</span>`;
+  }
+
+  const gtmC = document.getElementById("candidateGtmModels");
+  gtmC.innerHTML = "";
+  (parsed.gtmModels || []).forEach(model=>{
+    const tag = document.createElement("div");
+    tag.className = "tag on";
+    tag.textContent = model;
+    gtmC.appendChild(tag);
+  });
+  if((parsed.gtmModels||[]).length===0){
+    gtmC.innerHTML = `<span style="font-size:13px;color:var(--on-surface-subtle);">No clear GTM model evidence detected.</span>`;
   }
 
   const sList = document.getElementById("strengthsList"); sList.innerHTML = "";
