@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>DNA of Enterprise Architects | Adobe Integrated Services</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600;700&family=Geist+Mono:wght@400&display=swap');
@@ -81,7 +82,17 @@
     font-size:13px; line-height:1.6;
   }
 
-  .stack-row{padding:16px 0; border-bottom:1px solid var(--border-subtle);}
+  .stack-grid{display:grid; grid-template-columns:1fr 1fr; gap:4px 32px;}
+  @media(max-width:760px){.stack-grid{grid-template-columns:1fr;}}
+  .stack-row{padding:14px 0; border-bottom:1px solid var(--border-subtle);}
+
+  .rubric-list{
+    display:grid; grid-template-columns:auto 1fr; gap:4px 12px;
+    font-size:12px; line-height:1.5; color:var(--on-surface-subtle);
+    background:var(--surface-container-low); border-radius:var(--radius);
+    padding:12px 14px; margin-bottom:16px;
+  }
+  .rubric-list .rubric-score{font-weight:700; font-family:'Geist Mono', monospace; color:var(--on-surface);}
   .stack-row:last-child{border-bottom:none;}
   .stack-row .stack-top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;}
   .stack-row .stack-name{font-size:15px; font-weight:700;}
@@ -321,7 +332,7 @@
     </button>
     <button class="tab-btn" data-tab="stack">
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l9 5-9 5-9-5 9-5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 13l9 5 9-5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 18l9 5 9-5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" opacity="0.55"/></svg>
-      <span>Competency Stacking</span>
+      <span>Score Yourself</span>
     </button>
   </div>
 
@@ -630,13 +641,18 @@
 
     <div class="page-hero">
       <span class="eyebrow">Self-Directed Growth</span>
-      <h1>Competency Stacking</h1>
+      <h1>Score Yourself</h1>
       <p>
         Drag any slider to where you'd honestly rate yourself right now. A recommendation appears under that item
         once you move it: a 1 or 2 points to a specific way to close the gap, a 3 and above points to turning that
-        strength into something the wider team can reuse. Nothing here is saved or tied to your Staff Scores
-        profile, it's just a space to think out loud.
+        strength into something the wider team can reuse. Nothing here is saved automatically, but you can export
+        your results below to send back.
       </p>
+    </div>
+
+    <div class="card">
+      <label for="stackYourName" style="font-size:13px; font-weight:700; display:block; margin-bottom:8px;">Your Name</label>
+      <input type="text" id="stackYourName" placeholder="Type your name here" style="width:100%; padding:10px 12px; border-radius:8px; border:1px solid var(--border-medium); font-family:'Work Sans',sans-serif; font-size:14px; background:var(--surface-container-low);">
     </div>
 
     <div class="card stack-sticky-card" id="stackScoreCard">
@@ -656,19 +672,63 @@
     <div class="card">
       <h2 style="color:var(--primary-brand);">Platform Prowess</h2>
       <p class="note" style="margin-top:0;">Hands-on depth across the specific Adobe tools clients pay us to run.</p>
-      <div id="stackPlatform"></div>
+      <div class="rubric-list">
+        <span class="rubric-score">0</span><span>Never used it.</span>
+        <span class="rubric-score">1</span><span>Used it once or twice in the past, without much depth.</span>
+        <span class="rubric-score">2</span><span>Used it as an administrator fewer than 5 times in the past 5 years, and/or have only lightly architected solutions around it.</span>
+        <span class="rubric-score">3</span><span>Use it week to week, know at least 40% of its features, and/or have extensively architected implementations, solutions, and integrations with it multiple times.</span>
+        <span class="rubric-score">4</span><span>Use it weekly to daily and know how to use about 70% of its features.</span>
+        <span class="rubric-score">5</span><span>Use it daily and know it like the back of your hand; can facilitate a call or demo on most if not all topics on the tool without prep.</span>
+      </div>
+      <div id="stackPlatform" class="stack-grid"></div>
     </div>
 
     <div class="card">
       <h2 style="color:var(--systems-green);">Systems Intelligence</h2>
       <p class="note" style="margin-top:0;">The connective tissue that turns a pile of platform licenses into a working ecosystem.</p>
-      <div id="stackTech"></div>
+      <div class="rubric-list">
+        <span class="rubric-score">0</span><span>Never interacted with this area.</span>
+        <span class="rubric-score">1</span><span>Been part of solutions or strategies here, but never led one.</span>
+        <span class="rubric-score">2</span><span>Led at least one initiative in this area.</span>
+        <span class="rubric-score">3</span><span>Led 3&ndash;4 initiatives in this area.</span>
+        <span class="rubric-score">4</span><span>Led more than 4 initiatives in this area.</span>
+        <span class="rubric-score">5</span><span>Led more than 4 initiatives, and have a library of resources, examples, and best practices to pull from.</span>
+      </div>
+      <div id="stackTech" class="stack-grid"></div>
     </div>
 
     <div class="card">
       <h2 style="color:var(--tertiary-brand);">Business Acumen</h2>
       <p class="note" style="margin-top:0;">The human and organizational skill that makes the technical work actually land.</p>
-      <div id="stackBiz"></div>
+      <div class="rubric-list">
+        <span class="rubric-score">0</span><span>Zero experience.</span>
+        <span class="rubric-score">1</span><span>Minimal experience.</span>
+        <span class="rubric-score">2</span><span>Some experience, but lack confidence in your abilities here.</span>
+        <span class="rubric-score">3</span><span>Solid experience, but would benefit from support leveling up further.</span>
+        <span class="rubric-score">4</span><span>Comfortable and confident, with only occasional support needed.</span>
+        <span class="rubric-score">5</span><span>Can do this without any concerns; expert level.</span>
+      </div>
+      <div id="stackBiz" class="stack-grid"></div>
+    </div>
+
+    <div class="card">
+      <label for="stackUpskillPlan" style="font-size:13px; font-weight:700; display:block; margin-bottom:8px;">Your current up-skill plan (if one exists) over the next 30 days</label>
+      <textarea id="stackUpskillPlan" placeholder="e.g. Finish the AJO certification prep course, shadow two live journey builds, present a Firefly demo at the next team sync..." style="width:100%; min-height:120px; padding:12px; border-radius:8px; border:1px solid var(--border-medium); font-family:'Work Sans',sans-serif; font-size:14px; background:var(--surface-container-low); resize:vertical;"></textarea>
+    </div>
+
+    <div class="card">
+      <div class="action-note">
+        Scoring a 3 and above in a given area? Document a best practice, template, or short demo for it, and bring
+        it to your weekly 1:1 so the rest of the team can learn from it, especially if you know someone else is
+        looking to level up in that same area.
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Export Your Results</h2>
+      <p class="note" style="margin-top:0;">Downloads an Excel file with your name, every competency score, the recommendation for each, your overall composite, and your 30-day plan, ready to send back.</p>
+      <button class="grade-btn" id="stackExportBtn" onclick="exportStackResults()">Export to Excel</button>
+      <div class="status-msg" id="stackExportStatus"></div>
     </div>
 
   </div>
@@ -1568,10 +1628,11 @@ function stackRow(container, category, item){
   function update(v, reveal){
     valSpan.textContent = v.toFixed(1);
     stackValues[category][item] = v;
-    if(reveal) recDiv.classList.add("visible");
     const isHigh = v >= 3;
+    if(reveal && !isHigh) recDiv.classList.add("visible");
+    if(isHigh) recDiv.classList.remove("visible");
     recDiv.className = "stack-rec" + (recDiv.classList.contains("visible") ? " visible" : "") + (isHigh ? " high" : " low");
-    titleSpan.textContent = isHigh ? "How to Knowledge Share" : "How to Level Up";
+    titleSpan.textContent = "How to Level Up";
 
     const rec = stackRecFor(item, v);
     textSpan.textContent = rec.text;
@@ -1648,6 +1709,69 @@ function renderStackView(){
   TECH_ITEMS.forEach(item=> stackRow(t, "tech", item));
   BIZ_ITEMS.forEach(item=> stackRow(b, "biz", item.name));
   updateStackComposite();
+}
+
+function exportStackResults(){
+  const statusEl = document.getElementById("stackExportStatus");
+  const name = (document.getElementById("stackYourName").value || "").trim();
+  const plan = (document.getElementById("stackUpskillPlan").value || "").trim();
+
+  if(!name){
+    statusEl.className = "status-msg error";
+    statusEl.textContent = "Add your name up top before exporting.";
+    return;
+  }
+
+  if(typeof XLSX === "undefined"){
+    statusEl.className = "status-msg error";
+    statusEl.textContent = "The export library didn't load. Check your internet connection and try again.";
+    return;
+  }
+
+  const pAvg = avg(stackValues.platform), tAvg = avg(stackValues.tech), bAvg = avg(stackValues.biz);
+  const composite5 = pAvg*0.40 + tAvg*0.30 + bAvg*0.30;
+  const pct = Math.round((composite5/5)*100);
+  const band = bandLabelForPct((composite5/5)*100);
+  const today = new Date().toLocaleDateString("en-US", {year:"numeric", month:"short", day:"numeric"});
+
+  const rows = [];
+  rows.push(["Score Yourself — Export"]);
+  rows.push(["Name", name]);
+  rows.push(["Date", today]);
+  rows.push(["Overall Composite Score", pct + "%"]);
+  rows.push(["Overall Band", band]);
+  rows.push(["Ideal Range (Desired Score)", "70% – 80%"]);
+  rows.push([]);
+  rows.push(["Category", "Competency", "Your Score (0-5)", "Recommendation"]);
+
+  function addCategoryRows(catKey, catLabel, items, getName){
+    items.forEach(rawItem=>{
+      const itemName = getName ? getName(rawItem) : rawItem;
+      const val = stackValues[catKey][itemName] || 0;
+      const rec = stackRecFor(itemName, val);
+      rows.push([catLabel, itemName, val, rec.text || ""]);
+    });
+  }
+
+  addCategoryRows("platform", "Platform Prowess", PLATFORM_ITEMS);
+  addCategoryRows("tech", "Systems Intelligence", TECH_ITEMS);
+  addCategoryRows("biz", "Business Acumen", BIZ_ITEMS, item=>item.name);
+
+  rows.push([]);
+  rows.push(["Your Current Up-Skill Plan (Next 30 Days)"]);
+  rows.push([plan || "(none provided)"]);
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws["!cols"] = [{wch:22},{wch:32},{wch:16},{wch:70}];
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Score Yourself");
+
+  const safeName = name.replace(/[^a-z0-9]+/gi, "_");
+  XLSX.writeFile(wb, `Score_Yourself_${safeName}.xlsx`);
+
+  statusEl.className = "status-msg";
+  statusEl.textContent = "Exported. Check your downloads for the .xlsx file.";
 }
 
 renderStartHere();
