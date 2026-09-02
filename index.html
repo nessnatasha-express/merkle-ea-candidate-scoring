@@ -22,6 +22,9 @@
     --systems-green:#0E9F6E;
     --systems-green-container:#DCF5EC;
     --systems-green-on-container:#04382A;
+    --orange:#B15C00;
+    --orange-container:#FFF1DA;
+    --orange-on-container:#5C3D05;
     --on-surface:#1F1F1F;
     --on-surface-subtle:#505050;
     --surface-body:#FCFCFC;
@@ -40,22 +43,32 @@
     --radius: 8px;
     --radius-lg: 16px;
     --radius-full: 999px;
+    --sidebar-width: 260px;
   }
 
   *{box-sizing:border-box;}
   body{margin:0; font-family:'Work Sans', sans-serif; background:var(--surface-body); color:var(--on-surface);}
   .wrap{max-width:1080px; margin:0 auto; padding:32px 24px 64px;}
 
-  header.hero{padding:24px 0 20px; border-bottom:1px solid var(--border-subtle); margin-bottom:20px; position:sticky; top:0; z-index:50; background:var(--surface-body);}
-  .topbar{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
-  .topbar-right{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
-  .build-tag{
-    font-size:11px; font-weight:600; color:var(--on-surface-subtle);
-    background:var(--surface-container-low); border:1px solid var(--border-subtle);
-    padding:4px 10px; border-radius:var(--radius-full); font-family:'Geist Mono', monospace;
+  .sidebar-nav{
+    position:fixed; top:0; left:0; width:var(--sidebar-width); height:100vh;
+    background:var(--surface-container-low); border-right:1px solid var(--border-subtle);
+    padding:28px 20px; display:flex; flex-direction:column; overflow-y:auto; z-index:50;
   }
+  .sidebar-logo{display:flex; align-items:center; margin-bottom:28px;}
+  .sidebar-logo svg{width:130px; height:auto; display:block;}
+  .sidebar-eyebrow{font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--primary-brand); margin-bottom:10px;}
+  .sidebar-links{display:flex; flex-direction:column; gap:4px;}
+  .main-content{margin-left:var(--sidebar-width);}
+
   .eyebrow{font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--primary-brand);}
-  .tabs{display:flex; gap:8px;}
+
+  .sidebar-footer{margin-top:auto; padding-top:16px;}
+  .sidebar-footer-divider{border-top:1px solid var(--border-subtle); margin-bottom:14px;}
+  .sidebar-footer-text{font-size:12px; line-height:1.6; color:var(--on-surface-subtle);}
+  .sidebar-footer-text .build-tag{
+    display:block; margin-top:2px; font-family:'Geist Mono', monospace; font-size:11px;
+  }
 
   .page-hero{padding:6px 0 8px; margin-bottom:8px;}
   .page-hero .eyebrow{display:block; margin-bottom:8px;}
@@ -66,6 +79,50 @@
     margin-top:16px; padding:12px 16px; border-radius:var(--radius);
     background:var(--primary-container); color:var(--primary-on-container);
     font-size:13px; line-height:1.6;
+  }
+
+  .stack-row{padding:16px 0; border-bottom:1px solid var(--border-subtle);}
+  .stack-row:last-child{border-bottom:none;}
+  .stack-row .stack-top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px;}
+  .stack-row .stack-name{font-size:15px; font-weight:700;}
+  .stack-row .stack-val{font-family:'Geist Mono', monospace; font-size:15px; font-weight:600; color:var(--primary-brand);}
+  .stack-rec{
+    margin-top:10px; padding:12px 14px; border-radius:var(--radius); font-size:13px; line-height:1.6;
+    display:none; align-items:flex-start; gap:10px;
+  }
+  .stack-rec.visible{display:flex;}
+  .stack-rec .stack-rec-icon{flex-shrink:0; width:22px; height:22px; margin-top:1px;}
+  .stack-rec .stack-rec-body{flex:1;}
+  .stack-rec .stack-rec-title{font-weight:700; display:block; margin-bottom:2px;}
+  .stack-rec.low{background:var(--orange-container); color:var(--orange-on-container);}
+  .stack-rec.low .stack-rec-icon{color:var(--orange);}
+  .stack-rec.high{background:var(--systems-green-container); color:var(--systems-green-on-container);}
+  .stack-rec.high .stack-rec-icon{color:var(--systems-green);}
+  .stack-rec-extras{margin-top:8px; display:flex; flex-direction:column; gap:6px;}
+  .stack-rec-link{font-size:12px; font-weight:600; color:inherit; text-decoration:underline;}
+  .stack-rec-prompt{font-size:12px; line-height:1.5; font-style:italic;}
+  .stack-rec-prompt-label{font-weight:700; font-style:normal;}
+
+  /* team coverage grid */
+  .cov-table{border-collapse:separate; border-spacing:4px; font-size:12px;}
+  .cov-table th{font-size:11px; font-weight:700; color:var(--on-surface-subtle); padding:2px 6px; text-align:center; white-space:nowrap;}
+  .cov-cat-label{
+    font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em;
+    padding:10px 6px 4px; text-align:left; white-space:nowrap;
+  }
+  .cov-item-label{font-size:12px; font-weight:600; text-align:left; padding:2px 10px 2px 6px; white-space:nowrap;}
+  .cov-cell{
+    width:42px; height:32px; border-radius:6px; text-align:center; vertical-align:middle;
+    font-family:'Geist Mono', monospace; font-size:12px; font-weight:700; border:1px solid var(--border-subtle);
+  }
+
+  .coverage-layout{display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start;}
+  .coverage-right-col{display:flex; flex-direction:column; gap:20px;}
+  @media(max-width:820px){.coverage-layout{grid-template-columns:1fr;}}
+
+  .stack-sticky-card{
+    position:sticky; top:16px; z-index:40;
+    box-shadow:var(--shadow-mid, var(--shadow-card));
   }
 
   .cat-summary-row{display:flex; gap:10px; margin-bottom:20px;}
@@ -90,12 +147,15 @@
   h1{font-size:40px; font-weight:700; letter-spacing:-0.02em; margin:2px 0 0;}
   .sub{font-size:15px; color:var(--on-surface-subtle); max-width:640px;}
 
-  /* tabs */
+  /* sidebar nav links */
   .tab-btn{
-    padding:10px 20px; border-radius:var(--radius-full); border:1px solid var(--border-medium);
-    background:var(--surface-body); font-size:14px; font-weight:600; cursor:pointer; color:var(--on-surface-subtle);
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left;
+    padding:10px 14px; border-radius:10px; border:none;
+    background:transparent; font-size:14px; font-weight:600; cursor:pointer; color:var(--on-surface-subtle);
   }
-  .tab-btn.active{background:var(--primary-brand); color:#fff; border-color:var(--primary-brand);}
+  .tab-btn svg{width:18px; height:18px; flex-shrink:0;}
+  .tab-btn:hover{background:var(--surface-container-mid);}
+  .tab-btn.active{background:var(--primary-container); color:var(--on-surface);}
   .view{display:none;}
   .view.active{display:block;}
 
@@ -229,22 +289,53 @@
 </style>
 </head>
 <body>
-<div class="wrap">
+<nav class="sidebar-nav">
+  <div class="sidebar-logo">
+    <svg width="664" height="83" viewBox="0 0 664 83" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M45.5287 37.2773H0L45.5287 82.8063V37.2773Z" fill="#F23A1D"/>
+      <path d="M151.272 83H133.663V33.68L107.229 60.114L80.7936 33.68V83H63.1865V0H72.5426L107.469 34.9264L141.916 0H151.272V83Z" fill="#1F1F1F"/>
+      <path d="M255.004 82.7517H174.494V0H251.641V17.0313H192.198V30.7043H231.203V47.3047H192.198V66.16H255.047V82.7517H255.004Z" fill="#1F1F1F"/>
+      <path d="M363.809 82.7583H344.092L322.359 49.0783H293.569V82.7583H276.156V0.430664H331.425C339.582 0.430664 345.907 2.44601 350.906 6.3319C356.328 10.6419 359.063 16.7431 359.063 24.6597C359.084 29.8358 357.509 34.8926 354.553 39.1412C351.448 43.396 347.085 46.5681 342.08 48.2095L363.809 82.7583ZM341.164 24.6597C341.226 23.6438 341.056 22.6272 340.665 21.6875C340.274 20.7478 339.673 19.9098 338.909 19.2377C336.587 17.8847 333.915 17.2505 331.232 17.4155H293.62V32.5763H331.234C334.88 32.5763 337.327 31.9039 338.911 30.5609C340.325 28.9157 341.122 26.8289 341.164 24.6597Z" fill="#1F1F1F"/>
+      <path d="M469.115 82.7583H448.486L417.876 41.5945L405.408 52.2453V82.76H387.651V0.430664H405.355V31.1833L441.865 0.430664H466.38L430.542 30.7523L469.115 82.7583Z" fill="#1F1F1F"/>
+      <path d="M563.918 82.7517H489.603V0H507.258V66.16H563.87L563.918 82.7604V82.7517Z" fill="#1F1F1F"/>
+      <path d="M663.467 82.7517H582.916V0H660.063V17.0313H600.428V30.7043H639.433V47.3047H600.428V66.16H663.469L663.467 82.7517Z" fill="#1F1F1F"/>
+    </svg>
+  </div>
 
-  <header class="hero">
-    <div class="topbar">
-      <span class="eyebrow">Merkle · Adobe Integrated Services</span>
-      <div class="topbar-right">
-        <span class="build-tag" id="buildTag"></span>
-        <div class="tabs">
-          <button class="tab-btn active" data-tab="start">Start Here</button>
-          <button class="tab-btn" data-tab="team">Staff Scores</button>
-          <button class="tab-btn" data-tab="candidate">Candidate Review</button>
-          <button class="tab-btn" data-tab="wins">Team DNA</button>
-        </div>
-      </div>
+  <div class="sidebar-links">
+    <button class="tab-btn active" data-tab="start">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M15.2 8.8l-2 6-6 2 2-6 6-2z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+      <span>Start Here</span>
+    </button>
+    <button class="tab-btn" data-tab="team">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8.5" cy="8" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="16.5" cy="9.5" r="2.4" stroke="currentColor" stroke-width="1.6"/><path d="M3.5 20c0-3 2.4-5.2 5-5.2s5 2.2 5 5.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M14.5 20c0-2.4 1.4-4.3 3.8-4.3S22 17.6 22 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span>Staff Scores</span>
+    </button>
+    <button class="tab-btn" data-tab="candidate" style="display:none;">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="3" width="10" height="14" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M8 7.2h4M8 10.2h4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="16" cy="16" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M18.2 18.2L21 21" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <span>Candidate Review</span>
+    </button>
+    <button class="tab-btn" data-tab="wins">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 20V11M9.5 20V4M15 20V13.5M20.5 20V8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span>Team DNA</span>
+    </button>
+    <button class="tab-btn" data-tab="stack">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3l9 5-9 5-9-5 9-5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 13l9 5 9-5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 18l9 5 9-5" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" opacity="0.55"/></svg>
+      <span>Competency Stacking</span>
+    </button>
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="sidebar-footer-divider"></div>
+    <div class="sidebar-footer-text">
+      Created by Natasha Ness
+      <span class="build-tag" id="buildTag"></span>
     </div>
-  </header>
+  </div>
+</nav>
+
+<div class="main-content">
+<div class="wrap">
 
   <!-- ===================== START HERE VIEW ===================== -->
   <div class="view active" id="view-start">
@@ -501,17 +592,15 @@
     </div>
 
     <div class="card">
-      <h2>Radar Overview</h2>
-      <p class="note" style="margin-top:0;">Each teammate plotted individually, against the team average, computed live as ratings change on Staff Scores.</p>
-      <div class="grid">
-        <div style="text-align:center;">
-          <svg class="radar" id="radarTeam" width="260" height="260" viewBox="0 0 260 260"></svg>
-          <div class="score" id="compositeScoreTeam" style="font-family:'Geist Mono',monospace; font-size:44px; color:var(--primary-brand);">0%</div>
-          <div class="label" style="font-size:13px;color:var(--on-surface-subtle);">team composite, out of 100</div>
-          <div id="radarTeamLegend" style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:14px;"></div>
-        </div>
-        <div>
-          <p style="font-size:14px; line-height:1.7; color:var(--on-surface-subtle);">This rolls up every current teammate's scores from Team DNA into one view: where the bench is strong, where it's thin, and what that means for staffing versus training decisions.</p>
+      <div class="composite" style="padding-top:0;">
+        <span class="score" id="compositeScoreTeam" style="font-size:44px;">0%</span>
+        <div class="label" style="font-size:13px;color:var(--on-surface-subtle);">team composite, out of 100</div>
+      </div>
+      <div class="coverage-layout" style="margin-top:16px;">
+        <div id="coverageGridPlatform" style="overflow-x:auto;"></div>
+        <div class="coverage-right-col">
+          <div id="coverageGridTech" style="overflow-x:auto;"></div>
+          <div id="coverageGridBiz" style="overflow-x:auto;"></div>
         </div>
       </div>
 
@@ -536,16 +625,66 @@
 
   </div>
 
+  <!-- ===================== COMPETENCY STACKING VIEW ===================== -->
+  <div class="view" id="view-stack">
+
+    <div class="page-hero">
+      <span class="eyebrow">Self-Directed Growth</span>
+      <h1>Competency Stacking</h1>
+      <p>
+        Drag any slider to where you'd honestly rate yourself right now. A recommendation appears under that item
+        once you move it: a 1 or 2 points to a specific way to close the gap, a 3 and above points to turning that
+        strength into something the wider team can reuse. Nothing here is saved or tied to your Staff Scores
+        profile, it's just a space to think out loud.
+      </p>
+    </div>
+
+    <div class="card stack-sticky-card" id="stackScoreCard">
+      <div class="composite" style="padding-top:0;">
+        <span class="score" id="stackComposite" style="font-size:48px;">60%</span>
+        <div class="label" id="stackBandLabel">Proficient</div>
+      </div>
+
+      <div class="cat-summary-row" id="stackSummaryRow"></div>
+
+      <div class="subsection" style="margin-top:0; border-top:none; padding-top:0;">
+        <h3>Where This Lands (0&ndash;100)</h3>
+        <div id="stackColorScale" style="margin-top:10px;"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="color:var(--primary-brand);">Platform Prowess</h2>
+      <p class="note" style="margin-top:0;">Hands-on depth across the specific Adobe tools clients pay us to run.</p>
+      <div id="stackPlatform"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="color:var(--systems-green);">Systems Intelligence</h2>
+      <p class="note" style="margin-top:0;">The connective tissue that turns a pile of platform licenses into a working ecosystem.</p>
+      <div id="stackTech"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="color:var(--tertiary-brand);">Business Acumen</h2>
+      <p class="note" style="margin-top:0;">The human and organizational skill that makes the technical work actually land.</p>
+      <div id="stackBiz"></div>
+    </div>
+
+  </div>
+
 </div>
 
 <div class="wrap">
-  <div class="card" id="idealBenchmarkCard">
+  <div class="card" id="idealBenchmarkCard" style="display:none;">
     <span class="ideal-toggle" onclick="toggleIdeal()">Adjust ideal candidate benchmark</span>
     <div id="idealPanel">
       <p class="note" style="margin-top:0;">Default benchmark assumes strong performance across the board. Tune these to reflect what "ideal" means for this specific req &mdash; it feeds the Candidate Review comparison and the 0&ndash;100 scale.</p>
       <div id="idealSliders"></div>
     </div>
   </div>
+</div>
+
 </div>
 
 <script>
@@ -562,6 +701,101 @@ const BIZ_ITEMS = [
 const INDUSTRIES = ["Finance","QSR","Healthcare","SaaS","Manufacturing","Pharmaceutical","Technology","Other"];
 const GTM_MODELS = ["B2B","B2B2C","D2C","B2C","Channel-Led","Product-Led"];
 
+const STACK_RECS = {
+  "AEP": {low:"Work through the Adobe Experience Platform Foundations skill path, then spend an hour in the sandbox building a test schema and dataset from scratch.",
+    linkLabel:"AEP certification overview (Experience League)", linkUrl:"https://experienceleague.adobe.com/en/docs/certification/program/hidden/aep-overview",
+    prompt:"Explain Adobe Experience Platform's XDM schema and dataset model like I'm new to CDPs, then quiz me on it."},
+  "AJO": {low:"Take the AJO certification prep course, then shadow a live journey-build session with someone stronger here.",
+    linkLabel:"AJO certification overview (Experience League)", linkUrl:"https://experienceleague.adobe.com/en/docs/certification/program/technical-certifications/ajo/ajo-overview",
+    prompt:"Walk me through how a journey is structured in Adobe Journey Optimizer, and give me 3 example use cases I could practice building."},
+  "CJA": {low:"Watch Adobe's CJA workspace walkthroughs, then rebuild one of those workspaces yourself using sandbox data.",
+    linkLabel:"CJA certification overview (Experience League)", linkUrl:"https://experienceleague.adobe.com/en/docs/certification/program/technical-certifications/acja/acja-overview",
+    prompt:"Explain how connections, data views, and workspaces fit together in Customer Journey Analytics, using a retail example."},
+  "AEM Sites": {low:"Work through the AEM developer certification track, then explore building a new component or page template in the sandbox.",
+    linkLabel:"AEM certification overview (Experience League)", linkUrl:"https://experienceleague.adobe.com/en/docs/certification/program/technical-certifications/aem/aem-overview",
+    prompt:"Explain AEM Sites component and template architecture, then suggest a small practice project for a sandbox."},
+  "AEM Assets": {low:"Take the AEM certification path, then explore smart tagging and dynamic media features in the sandbox.",
+    linkLabel:"AEM certification overview (Experience League)", linkUrl:"https://experienceleague.adobe.com/en/docs/certification/program/technical-certifications/aem/aem-overview",
+    prompt:"Explain AEM Assets metadata schemas and smart tagging, then suggest 3 things to try in a sandbox this week."},
+  "RTCDP": {low:"Complete the Real-Time CDP certification prep, then build a test audience segment end-to-end in the sandbox.",
+    linkLabel:"Real-Time CDP certification overview (Experience League)", linkUrl:"https://experienceleague.adobe.com/en/docs/certification/program/technical-certifications/rtcdp/rtcdp-overview",
+    prompt:"Explain how audiences, segments, and destinations work together in Real-Time CDP, using a simple example."},
+  "Marketo": {low:"Take a Marketo Engage certification course, then build a test nurture program in the sandbox.",
+    linkLabel:"Marketo Engage certification overview (Experience League)", linkUrl:"https://experienceleague.adobe.com/en/docs/certification/program/technical-certifications/ame/ame-overview",
+    prompt:"Explain how smart lists and smart campaigns work together in Marketo Engage, then give me a practice exercise."},
+  "Firefly": {low:"Spend an afternoon in Firefly exploring generative fill and text-to-image workflows on a sample asset.",
+    linkLabel:"Adobe certification catalog (search Firefly)", linkUrl:"https://certification.adobe.com/certifications",
+    prompt:"Explain the main generative features in Adobe Firefly and how enterprise teams typically use them in content workflows."},
+  "GenStudio": {low:"Watch Adobe's GenStudio for Performance Marketing demo videos, then explore campaign brief automation in the sandbox.",
+    linkLabel:"Adobe certification catalog (search GenStudio)", linkUrl:"https://certification.adobe.com/certifications",
+    prompt:"Explain what Adobe GenStudio for Performance Marketing does and how it fits into a content supply chain, in plain language."},
+  "Workfront": {low:"Take the Workfront Fundamentals training, then build a test project template in the sandbox.",
+    linkLabel:"Adobe certification home (Workfront overview)", linkUrl:"https://experienceleague.adobe.com/en/certification-home",
+    prompt:"Explain Workfront's core objects, projects, tasks, portfolios, and programs, then suggest a mock project I could build to practice."},
+  "Adobe Launch/Tagging": {low:"Work through Experience Platform Tags (formerly Launch) documentation, then set up a test tag and rule in the sandbox.",
+    linkLabel:"Experience League (search Tags)", linkUrl:"https://experienceleague.adobe.com/",
+    prompt:"Explain how rules, extensions, and data elements work together in Adobe Experience Platform Tags."},
+  "Adobe Commerce": {low:"Browse Adobe Commerce learning content, then explore catalog and product setup in the admin sandbox.",
+    linkLabel:"Adobe Commerce hub (Experience League)", linkUrl:"https://experienceleague.adobe.com/en/browse/commerce",
+    prompt:"Explain Adobe Commerce's catalog, checkout, and extension architecture at a high level for someone coming from a content background."},
+  "AI / Custom Agents": {low:"Read Anthropic's guidance on building agents, then prototype a small custom agent of your own.",
+    linkLabel:"Building Effective Agents (Anthropic)", linkUrl:"https://www.anthropic.com/research/building-effective-agents",
+    prompt:"Walk me through the difference between a workflow and an agent per Anthropic's guidance, and suggest a small agent I could prototype this week."},
+  "Engineering": {low:"Pick a specific gap (a language, framework, or pattern) and do a focused refresher, then pair with an engineer on a live build task.",
+    linkLabel:"MDN Web Docs (general reference)", linkUrl:"https://developer.mozilla.org/",
+    prompt:"Give me a short refresher on [a specific language or framework] fundamentals and a small coding exercise to practice this week."},
+
+  "Content Management": {low:"Take a content operations or DAM governance course, then document one existing workflow you don't fully understand yet.",
+    linkLabel:"Experience League (search DAM governance)", linkUrl:"https://experienceleague.adobe.com/en/courses",
+    prompt:"Explain what good DAM governance and metadata taxonomy looks like at an enterprise scale, with a simple example."},
+  "Data Management": {low:"Watch a data architecture fundamentals course, then map one client's data flow end-to-end on your own.",
+    linkLabel:"AEP certification overview (data architecture basics)", linkUrl:"https://experienceleague.adobe.com/en/docs/certification/program/hidden/aep-overview",
+    prompt:"Explain enterprise data architecture fundamentals, identity resolution, and data flows, using a retail example I can follow."},
+  "Infrastructure + Integrations": {low:"Take a course on API-led integration patterns, then build a small test integration in the sandbox.",
+    linkLabel:"Adobe Developer portal", linkUrl:"https://developer.adobe.com/",
+    prompt:"Explain common API-led integration patterns between Adobe products and third-party systems, with a simple diagrammed example."},
+  "Governance": {low:"Review Merkle's governance framework templates, then shadow a governance review session on a live engagement.",
+    linkLabel:"TOGAF Standard (The Open Group)", linkUrl:"https://www.opengroup.org/togaf",
+    prompt:"Explain how TOGAF's architecture governance phase works, and how I might apply a lightweight version of it to a client engagement."},
+  "Platform Modernization": {low:"Watch case studies on platform migrations, then draft a mock modernization roadmap for a hypothetical client.",
+    linkLabel:"Experience League (search modernization)", linkUrl:"https://experienceleague.adobe.com/",
+    prompt:"Explain what a typical legacy-to-cloud platform modernization roadmap looks like, phase by phase."},
+  "AI Expertise": {low:"Take a generative AI fundamentals course, then experiment hands-on with one new AI feature in the sandbox.",
+    linkLabel:"Prompt engineering overview (Anthropic docs)", linkUrl:"https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview",
+    prompt:"Teach me the core principles of good prompt engineering, then give me 3 exercises to practice on real work tasks."},
+
+  "Client Leadership": {low:"Shadow an executive readout, then practice a mock stakeholder presentation with a peer.",
+    linkLabel:"Harvard Business Review (leadership)", linkUrl:"https://hbr.org/",
+    prompt:"Act as a skeptical enterprise client stakeholder and let me practice a 5-minute executive readout on you, then give me feedback."},
+  "Team Orchestration": {low:"Read up on the RACI model and pod coordination best practices, then lead a small internal coordination task.",
+    linkLabel:"RACI matrix overview (Wikipedia)", linkUrl:"https://en.wikipedia.org/wiki/Responsibility_assignment_matrix",
+    prompt:"Explain the RACI model with a simple example, then help me build a RACI for a real project I'm coordinating."},
+  "Navigating Ambiguity": {low:"Volunteer for a discovery session with an unclear scope, and debrief afterward on what you'd do differently.",
+    prompt:"Give me a framework for making progress on a project when the scope is still unclear, then role-play a messy discovery session with me."},
+  "Solution Design": {low:"Study a past solution design deck closely, then draft a practice architecture for a sample scenario.",
+    linkLabel:"TOGAF Standard (The Open Group)", linkUrl:"https://www.opengroup.org/togaf",
+    prompt:"Walk me through TOGAF's Architecture Development Method at a high level, then help me sketch a solution architecture for a sample client scenario."},
+  "Transformation": {low:"Read a change-management framework primer, then outline a mock transformation roadmap of your own.",
+    linkLabel:"Prosci ADKAR Model", linkUrl:"https://www.prosci.com/methodology/adkar",
+    prompt:"Explain the ADKAR change management model, then help me apply it to a mock client transformation scenario."},
+  "Cross-GTM Agency Expertise": {low:"Sit in on a pre-sales or account team sync, then learn the current GTM motion end to end.",
+    prompt:"Explain how pre-sales, delivery, and account teams typically need to stay aligned in an agency GTM motion, and where that usually breaks down."},
+};
+
+function stackRecFor(item, val){
+  if(val < 3){
+    const rec = STACK_RECS[item];
+    if(rec === undefined){
+      return {text:"Look for a training, certification, or sandbox exercise that builds hands-on reps here, and ask a stronger teammate to walk you through their approach."};
+    }
+    return {text:rec.low, linkLabel:rec.linkLabel, linkUrl:rec.linkUrl, prompt:rec.prompt};
+  }
+  if(STACK_RECS[item] === undefined){
+    return {text:"Document a best practice, template, or short demo for this, and bring it to your weekly 1:1 as something the wider team can reuse."};
+  }
+  return {text:`Turn this into a best practice doc, template, or short demo for ${item}, and bring it to your weekly 1:1 so the rest of the team can learn from it.`};
+}
+
 function blankProfile(){
   return {
     platform:Object.fromEntries(PLATFORM_ITEMS.map(i=>[i,0])),
@@ -573,26 +807,33 @@ function blankProfile(){
 }
 
 const STAFF = {
-  "natasha": Object.assign({name:"Natasha Ness", role:"Enterprise Architect", initials:"NN"}, {
+  "natasha": Object.assign({name:"Enterprise Architect 1", role:"Enterprise Architect", initials:"1"}, {
     platform:{"AEP":3,"AJO":4,"CJA":3,"AEM Sites":2,"AEM Assets":3,"RTCDP":3,"Marketo":5,"Firefly":5,"GenStudio":5,"Workfront":5,"Adobe Launch/Tagging":2,"Adobe Commerce":2,"AI / Custom Agents":5,"Engineering":3},
     tech:{"Content Management":5,"Data Management":4,"Infrastructure + Integrations":4,"Governance":5,"Platform Modernization":5,"AI Expertise":5},
     biz:{"Client Leadership":5,"Team Orchestration":5,"Navigating Ambiguity":5,"Solution Design":5,"Transformation":5,"Cross-GTM Agency Expertise":5},
     industries:["Healthcare","Pharmaceutical","Finance","Technology","SaaS","Manufacturing","QSR"],
     gtmModels:["B2B","B2B2C","D2C","B2C","Channel-Led","Product-Led"]
   }),
-  "aditya": Object.assign({name:"Aditya Vedula", role:"Enterprise Architect", initials:"AV"}, {
+  "aditya": Object.assign({name:"Enterprise Architect 2", role:"Enterprise Architect", initials:"2"}, {
     platform:{"AEP":5,"AJO":0,"CJA":0,"AEM Sites":3,"AEM Assets":3,"RTCDP":5,"Marketo":0,"Firefly":0,"GenStudio":0,"Workfront":4,"Adobe Launch/Tagging":3,"Adobe Commerce":0,"AI / Custom Agents":5,"Engineering":5},
     tech:{"Content Management":3,"Data Management":5,"Infrastructure + Integrations":5,"Governance":4,"Platform Modernization":5,"AI Expertise":5},
     biz:{"Client Leadership":5,"Team Orchestration":5,"Navigating Ambiguity":4,"Solution Design":5,"Transformation":5,"Cross-GTM Agency Expertise":5},
     industries:["Finance","Manufacturing","Technology","Other"],
     gtmModels:["B2B"]
   }),
-  "gowtami": Object.assign({name:"Gowtami Mohanty", role:"Enterprise Architect", initials:"GM"}, {
+  "gowtami": Object.assign({name:"Enterprise Architect 3", role:"Enterprise Architect", initials:"3"}, {
     platform:{"AEP":5,"AJO":5,"CJA":4,"AEM Sites":1,"AEM Assets":1,"RTCDP":5,"Marketo":4,"Firefly":0,"GenStudio":0,"Workfront":1,"Adobe Launch/Tagging":4,"Adobe Commerce":0,"AI / Custom Agents":5,"Engineering":2},
     tech:{"Content Management":1,"Data Management":5,"Infrastructure + Integrations":4,"Governance":1,"Platform Modernization":4,"AI Expertise":5},
     biz:{"Client Leadership":4,"Team Orchestration":5,"Navigating Ambiguity":3,"Solution Design":4,"Transformation":5,"Cross-GTM Agency Expertise":4},
     industries:["Healthcare","Finance","Technology"],
     gtmModels:["B2B","B2C"]
+  }),
+  "art": Object.assign({name:"Enterprise Architect 4", role:"Enterprise Architect", initials:"4"}, {
+    platform:{"AEP":4,"AJO":0,"CJA":5,"AEM Sites":5,"AEM Assets":4,"RTCDP":5,"Marketo":4,"Firefly":0,"GenStudio":0,"Workfront":4,"Adobe Launch/Tagging":5,"Adobe Commerce":5,"AI / Custom Agents":2,"Engineering":4},
+    tech:{"Content Management":5,"Data Management":4,"Infrastructure + Integrations":5,"Governance":5,"Platform Modernization":5,"AI Expertise":2},
+    biz:{"Client Leadership":5,"Team Orchestration":4,"Navigating Ambiguity":3,"Solution Design":5,"Transformation":5,"Cross-GTM Agency Expertise":4},
+    industries:["Healthcare","Finance","SaaS","Manufacturing"],
+    gtmModels:["B2B","B2C","B2B2C"]
   })
 };
 let activeStaff = "natasha";
@@ -806,10 +1047,49 @@ function strengthNoteFor(cat, name){
 
 const RADAR_PALETTE = ["#F9615D","#6311CB","#25DA53","#FFB020","#00A3A3","#D6336C","#2F98F7","#0328D1"];
 const RADAR_COLOR_OVERRIDES = {
-  "Natasha Ness": "#F9615D",   // red
-  "Gowtami Mohanty": "#6311CB", // purple
-  "Aditya Vedula": "#25DA53"    // green
+  "Enterprise Architect 1": "#F9615D",   // red
+  "Enterprise Architect 3": "#6311CB", // purple
+  "Enterprise Architect 2": "#25DA53",   // green
+  "Enterprise Architect 4": "#00A3A3"    // teal
 };
+
+function hexToRgb(hex){
+  const h = hex.replace("#","");
+  return [parseInt(h.substring(0,2),16), parseInt(h.substring(2,4),16), parseInt(h.substring(4,6),16)];
+}
+
+function buildGroupTable(group, members, cat){
+  const rgb = hexToRgb(group.color);
+  let html = `<table class="cov-table"><thead><tr><th></th>`;
+  members.forEach(m=>{
+    html += `<th>EA ${m.name.split(" ").pop()}</th>`;
+  });
+  html += `</tr></thead><tbody>`;
+  html += `<tr><td class="cov-cat-label" colspan="${members.length+1}" style="color:${group.color};">${group.label}</td></tr>`;
+  group.items.forEach(item=>{
+    html += `<tr><td class="cov-item-label">${item}</td>`;
+    members.forEach(m=>{
+      const val = m[cat][item] || 0;
+      const alpha = (val/5)*0.85 + (val>0 ? 0.1 : 0);
+      const textColor = val >= 3 ? "#fff" : "var(--on-surface-subtle)";
+      html += `<td class="cov-cell" style="background:rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha}); color:${textColor};">${val > 0 ? val : ""}</td>`;
+    });
+    html += `</tr>`;
+  });
+  html += `</tbody></table>`;
+  return html;
+}
+
+function renderCoverageGrid(members){
+  const platformEl = document.getElementById("coverageGridPlatform");
+  const techEl = document.getElementById("coverageGridTech");
+  const bizEl = document.getElementById("coverageGridBiz");
+  if(!platformEl || !techEl || !bizEl) return;
+
+  platformEl.innerHTML = buildGroupTable({label:"Platform Prowess", color:"#0328D1", items:PLATFORM_ITEMS}, members, "platform");
+  techEl.innerHTML = buildGroupTable({label:"Systems Intelligence", color:"#0E9F6E", items:TECH_ITEMS}, members, "tech");
+  bizEl.innerHTML = buildGroupTable({label:"Business Acumen", color:"#6311CB", items:BIZ_ITEMS.map(i=>i.name)}, members, "biz");
+}
 
 function renderTeamAggregate(){
   const members = Object.values(STAFF);
@@ -823,28 +1103,12 @@ function renderTeamAggregate(){
   const teamComposite = pAvg*0.40 + tAvg*0.30 + bAvg*0.30;
   document.getElementById("compositeScoreTeam").textContent = Math.round((teamComposite/5)*100) + "%";
 
-  const series = [{values:[pAvg,tAvg,bAvg], color:"#0328D1", dashed:true}];
-  const legendItems = [{label:"Team Average", color:"#0328D1", dashed:true}];
-  members.forEach((m,i)=>{
-    const color = RADAR_COLOR_OVERRIDES[m.name] || RADAR_PALETTE[i % RADAR_PALETTE.length];
-    series.push({values:[avg(m.platform),avg(m.tech),avg(m.biz)], color:color});
-    legendItems.push({label:m.name, color:color, dashed:false});
-  });
-  drawRadar("radarTeam", series);
-
-  const legendC = document.getElementById("radarTeamLegend");
-  if(legendC){
-    legendC.innerHTML = legendItems.map(li=>
-      `<span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--on-surface-subtle);">
-        <span style="width:14px;height:0;border-top:2px ${li.dashed?'dashed':'solid'} ${li.color};display:inline-block;"></span>${li.label}
-      </span>`
-    ).join("");
-  }
+  renderCoverageGrid(members);
 
   const scaleMarkers = [];
   members.forEach((m,i)=>{
     const color = RADAR_COLOR_OVERRIDES[m.name] || RADAR_PALETTE[i % RADAR_PALETTE.length];
-    scaleMarkers.push({label:m.name.split(" ")[0], pct: compositePercent(m), kind:"staff", color:color});
+    scaleMarkers.push({label:"EA " + m.name.split(" ").pop(), pct: compositePercent(m), kind:"staff", color:color});
   });
   drawColorScale(scaleMarkers, "colorScaleTeam", {from:70, to:80, label:"Ideal Range"});
 
@@ -995,7 +1259,7 @@ async function gradeTeamMember(){
   statusEl.textContent = "Scoring " + STAFF[activeStaff].name + "...";
 
   const parsed = await callGradingAPI(text);
-  if(parsed){
+  if(parsed && !parsed.error){
     const s = STAFF[activeStaff];
     PLATFORM_ITEMS.forEach(i=>{ if(parsed.platform && parsed.platform[i]!==undefined) s.platform[i] = parsed.platform[i]; });
     TECH_ITEMS.forEach(i=>{ if(parsed.tech && parsed.tech[i]!==undefined) s.tech[i] = parsed.tech[i]; });
@@ -1005,7 +1269,7 @@ async function gradeTeamMember(){
     renderTeamView();
     statusEl.textContent = "Scored. Sliders updated below — adjust any that look off.";
   }else{
-    statusEl.textContent = "Something went wrong scoring this person. Try again, or check the pasted text isn't too short.";
+    statusEl.textContent = (parsed && parsed.error) ? parsed.error : "Something went wrong scoring this person. Try again, or check the pasted text isn't too short.";
     statusEl.className = "status-msg error";
   }
   btn.disabled = false;
@@ -1043,17 +1307,42 @@ Respond with ONLY valid JSON, no markdown fences, no preamble, in this exact sha
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
         model: "claude-sonnet-4-6",
-        max_tokens: 1000,
+        max_tokens: 2000,
         messages: [{ role: "user", content: prompt }]
       })
     });
+
+    if(!response.ok){
+      const errText = await response.text().catch(()=>"");
+      console.error("Grading API HTTP error:", response.status, errText);
+      throw new Error(`API returned ${response.status}. This tool needs to run inside Claude's own viewer (the artifact panel) to reach the grading API. If this file was downloaded and opened directly in a browser, or embedded on another site, the API call won't work there.`);
+    }
+
     const data = await response.json();
     const textBlocks = (data.content || []).filter(b=>b.type==="text").map(b=>b.text).join("\n");
-    const clean = textBlocks.replace(/```json|```/g,"").trim();
-    return JSON.parse(clean);
+
+    if(!textBlocks){
+      console.error("Grading API returned no text content:", data);
+      throw new Error("The grading model didn't return any text. Try again, or try with a shorter paste.");
+    }
+
+    let clean = textBlocks.replace(/```json|```/g,"").trim();
+    // Defensive: if the model added any preamble/postamble despite instructions, isolate the {...} block.
+    const firstBrace = clean.indexOf("{");
+    const lastBrace = clean.lastIndexOf("}");
+    if(firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace){
+      clean = clean.slice(firstBrace, lastBrace + 1);
+    }
+
+    try{
+      return JSON.parse(clean);
+    }catch(parseErr){
+      console.error("Grading JSON parse failed. Raw text was:", textBlocks);
+      throw new Error("Couldn't read the model's response as valid data. This can happen with very long pastes, or a response that got cut off. Try again, or trim the pasted text a bit.");
+    }
   }catch(err){
     console.error("Grading error:", err);
-    return null;
+    return {error: err.message || "Unknown error"};
   }
 }
 
@@ -1072,11 +1361,11 @@ async function gradeCandidate(){
   statusEl.textContent = "Grading candidate against the competency model...";
 
   const parsed = await callGradingAPI(text);
-  if(parsed){
+  if(parsed && !parsed.error){
     renderCandidateResults(parsed);
     statusEl.textContent = "Done.";
   }else{
-    statusEl.textContent = "Something went wrong grading this candidate. Try again, or check the pasted text isn't too short.";
+    statusEl.textContent = (parsed && parsed.error) ? parsed.error : "Something went wrong grading this candidate. Try again, or check the pasted text isn't too short.";
     statusEl.className = "status-msg error";
   }
   btn.disabled = false;
@@ -1123,7 +1412,7 @@ function renderCandidateResults(parsed){
     {label:"This Candidate", pct:candidatePct, kind:"candidate"}
   ];
   Object.values(STAFF).forEach(s=>{
-    markers.push({label:s.name.split(" ")[0], pct: compositePercent(s), kind:"staff"});
+    markers.push({label:"EA " + s.name.split(" ").pop(), pct: compositePercent(s), kind:"staff"});
   });
   drawColorScale(markers, "colorScale", {from:70, to:80, label:"Ideal Range"});
 
@@ -1240,8 +1529,130 @@ function drawScoreBandScale(){
 
 /* ---------- init ---------- */
 document.getElementById("buildTag").textContent = "Updated " + new Date().toLocaleDateString("en-US", {year:"2-digit", month:"2-digit", day:"2-digit"});
+/* ---------- competency stacking page ---------- */
+const LIGHTBULB_SVG = `<svg class="stack-rec-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M9 21h6M10 18h4M12 3a6 6 0 00-3.5 10.9c.4.3.6.8.6 1.3v.3h5.8v-.3c0-.5.2-1 .6-1.3A6 6 0 0012 3z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+
+const stackValues = {
+  platform: Object.fromEntries(PLATFORM_ITEMS.map(i=>[i,3])),
+  tech: Object.fromEntries(TECH_ITEMS.map(i=>[i,3])),
+  biz: Object.fromEntries(BIZ_ITEMS.map(i=>[i.name,3])),
+};
+
+function stackRow(container, category, item){
+  const row = document.createElement("div");
+  row.className = "stack-row";
+  row.innerHTML = `
+    <div class="stack-top">
+      <span class="stack-name">${item}</span>
+      <span class="stack-val">3.0</span>
+    </div>
+    <input type="range" min="0" max="5" step="0.5" value="3">
+    <div class="stack-rec">
+      ${LIGHTBULB_SVG}
+      <div class="stack-rec-body">
+        <span class="stack-rec-title"></span>
+        <span class="stack-rec-text"></span>
+        <div class="stack-rec-extras"></div>
+      </div>
+    </div>
+  `;
+  const input = row.querySelector("input");
+  const valSpan = row.querySelector(".stack-val");
+  const recDiv = row.querySelector(".stack-rec");
+  const titleSpan = row.querySelector(".stack-rec-title");
+  const textSpan = row.querySelector(".stack-rec-text");
+  const extrasDiv = row.querySelector(".stack-rec-extras");
+
+  function update(v, reveal){
+    valSpan.textContent = v.toFixed(1);
+    stackValues[category][item] = v;
+    if(reveal) recDiv.classList.add("visible");
+    const isHigh = v >= 3;
+    recDiv.className = "stack-rec" + (recDiv.classList.contains("visible") ? " visible" : "") + (isHigh ? " high" : " low");
+    titleSpan.textContent = isHigh ? "How to Knowledge Share" : "How to Level Up";
+
+    const rec = stackRecFor(item, v);
+    textSpan.textContent = rec.text;
+
+    extrasDiv.innerHTML = "";
+    if(!isHigh){
+      if(rec.linkUrl){
+        const a = document.createElement("a");
+        a.href = rec.linkUrl;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.className = "stack-rec-link";
+        a.textContent = "Resource: " + (rec.linkLabel || rec.linkUrl);
+        extrasDiv.appendChild(a);
+      }
+      if(rec.prompt){
+        const p = document.createElement("div");
+        p.className = "stack-rec-prompt";
+        p.innerHTML = `<span class="stack-rec-prompt-label">Try this in Claude:</span> "${rec.prompt}"`;
+        extrasDiv.appendChild(p);
+      }
+    }
+    updateStackComposite();
+  }
+
+  input.oninput = ()=> update(parseFloat(input.value), true);
+  update(3, false);
+  container.appendChild(row);
+}
+
+function bandLabelForPct(pct){
+  if(pct < 40) return "Emerging";
+  if(pct < 60) return "Developing";
+  if(pct < 70) return "Proficient";
+  if(pct <= 80) return "Ideal Range";
+  return "Full Spectrum";
+}
+
+function updateStackComposite(){
+  const pAvg = avg(stackValues.platform), tAvg = avg(stackValues.tech), bAvg = avg(stackValues.biz);
+  const composite5 = pAvg*0.40 + tAvg*0.30 + bAvg*0.30;
+  const pct = (composite5/5)*100;
+
+  const compositeEl = document.getElementById("stackComposite");
+  const bandEl = document.getElementById("stackBandLabel");
+  if(compositeEl) compositeEl.textContent = Math.round(pct) + "%";
+  if(bandEl) bandEl.textContent = bandLabelForPct(pct);
+
+  const summaryRow = document.getElementById("stackSummaryRow");
+  if(summaryRow){
+    const cats = [
+      {label:"Platform Prowess", pct: Math.round((pAvg/5)*100), color:"var(--primary-brand)"},
+      {label:"Systems Intelligence", pct: Math.round((tAvg/5)*100), color:"var(--systems-green)"},
+      {label:"Business Acumen", pct: Math.round((bAvg/5)*100), color:"var(--tertiary-brand)"},
+    ];
+    summaryRow.innerHTML = cats.map(c=>
+      `<div class="cat-summary-item" style="border-color:${c.color};">
+        <div class="cs-label">${c.label}</div>
+        <div class="cs-pct" style="color:${c.color};">${c.pct}%</div>
+      </div>`
+    ).join("");
+  }
+
+  drawColorScale([{label:"You", pct:pct, kind:"candidate"}], "stackColorScale", {from:70, to:80, label:"Ideal Range"});
+}
+
+function renderStackView(){
+  const p = document.getElementById("stackPlatform");
+  const t = document.getElementById("stackTech");
+  const b = document.getElementById("stackBiz");
+  if(!p || !t || !b) return;
+  p.innerHTML = ""; t.innerHTML = ""; b.innerHTML = "";
+  PLATFORM_ITEMS.forEach(item=> stackRow(p, "platform", item));
+  TECH_ITEMS.forEach(item=> stackRow(t, "tech", item));
+  BIZ_ITEMS.forEach(item=> stackRow(b, "biz", item.name));
+  updateStackComposite();
+}
+
 renderStartHere();
 renderTeamView();
+renderStackView();
 renderIdealSliders();
 </script>
 </body>
